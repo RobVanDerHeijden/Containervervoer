@@ -20,20 +20,21 @@ namespace ContainervervoerCasus
         private void Btn_AddContainer_Click(object sender, EventArgs e)
         {
             Enum.TryParse<ContainerType>(Cbbx_ContainerType.SelectedValue.ToString(), out ContainerType status);
+            int weight = (int) Nud_ContainerWeight.Value;
             string containerType = Cbbx_ContainerType.SelectedValue.ToString();
             if (containerType == "Cooled")
             {
-                CooledContainer newContainer = new CooledContainer();
+                CooledContainer newContainer = new CooledContainer(weight, status);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (containerType == "Valuable")
             {
-                ValuableContainer newContainer = new ValuableContainer();
+                ValuableContainer newContainer = new ValuableContainer(weight, status);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (containerType == "Regular")
             {
-                Container newContainer = new Container(5, status);
+                Container newContainer = new Container(weight, status);
                 Lbx_Containers.Items.Add(newContainer);
             }
 
