@@ -28,16 +28,19 @@ namespace ContainervervoerCasus
             if (status == ContainerType.Regular)
             {
                 Container newContainer = new Container(weight, status);
+                _dock.AddContainer(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Valuable)
             {
                 ValuableContainer newContainer = new ValuableContainer(weight, status);
+                _dock.AddContainer(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Cooled)
             {
                 CooledContainer newContainer = new CooledContainer(weight, status);
+                _dock.AddContainer(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
 
@@ -51,10 +54,51 @@ namespace ContainervervoerCasus
 
         private void UpdateContainerStats()
         {
-            Lbl_TotalRegular.Text = "Total Regular: " + Models.Container.TotalRegularContainers;
-            Lbl_TotalValuable.Text = "Total Valuable: " + Models.Container.TotalValuableContainers;
-            Lbl_TotalCooled.Text = "Total Cooled: " + Models.Container.TotalCooledContainers;
-            Lbl_TotalContainerWeight.Text = "Total weight all containers: " + Models.Container.TotalWeightContainers;
+            Lbl_TotalRegular.Text = "Total Regular: " + Models.Dock.TotalRegularContainers;
+            Lbl_TotalValuable.Text = "Total Valuable: " + Models.Dock.TotalValuableContainers;
+            Lbl_TotalCooled.Text = "Total Cooled: " + Models.Dock.TotalCooledContainers;
+            Lbl_TotalContainerWeight.Text = "Total weight all containers: " + Models.Dock.TotalWeightContainers;
+        }
+
+        private void Btn_ResetContainers_Click(object sender, EventArgs e)
+        {
+            _dock.Containers.Clear();
+            Lbx_Containers.Items.Clear();
+            Models.Dock.TotalRegularContainers = 0;
+            Models.Dock.TotalValuableContainers = 0;
+            Models.Dock.TotalCooledContainers = 0;
+            Models.Dock.TotalWeightContainers = 0;
+
+            UpdateContainerStats();
+        }
+
+        private void Btn_AddCargoShip_Click(object sender, EventArgs e)
+        {
+            CargoShip cargoShip = new CargoShip((int) Nud_CargoShipWidth.Value, (int) Nud_CargoShipLength.Value);
+            _dock.CargoShips.Add(cargoShip);
+            Lbx_CargoShips.Items.Add(cargoShip);
+        }
+
+        private void Btn_ResetCargoShip_Click(object sender, EventArgs e)
+        {
+            _dock.CargoShips.Clear();
+            Lbx_CargoShips.Items.Clear();
+
+            UpdateContainerStats();
+        }
+
+        private void Lbx_CargoShips_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Lbx_Stacks.Items.Clear();
+            if (Lbx_CargoShips.SelectedIndex != -1)
+            {
+                CargoShip cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+                foreach (Stack stack in cargoShip.Stacks)
+                {
+                    Lbx_Stacks.Items.Add(stack);
+                }
+            }
+            
         }
     }
 }

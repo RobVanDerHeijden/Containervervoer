@@ -1,20 +1,16 @@
 ﻿namespace ContainervervoerCasus.Models
 {
-    public enum ContainerType { Regular = 0, Valuable = 1, Cooled = 2 };
     public class Container
     {
         // Fields
         public int ContainerID { get; set; }
         public int Weight { get; set; }
-        public int MinimumWeight { get; set; }
-        public int MaximumWeight { get; set; }
+        public int MinimumWeight = 4;
+        public int MaximumWeight = 30;
         public int MaximumCarryWeight { get; set; }
         public int IsCarying { get; set; }
         public ContainerType ContainerType { get; set; }
-        public static int TotalWeightContainers;
-        public static int TotalRegularContainers;
-        public static int TotalValuableContainers;
-        public static int TotalCooledContainers;
+        
         
         // Constructors
         public Container()
@@ -26,12 +22,16 @@
         public Container(int weight, ContainerType containerType)
         {
             Weight = weight;
+            MaximumCarryWeight = 30;
+            IsCarying = 0;
             ContainerType = containerType;
-            TotalWeightContainers += weight;
+
+
             if (containerType == ContainerType.Regular)
             {
-                TotalRegularContainers++;
+                Dock.TotalRegularContainers++;
             }
+            Dock.TotalWeightContainers += weight;
         }
         
         public override string ToString()

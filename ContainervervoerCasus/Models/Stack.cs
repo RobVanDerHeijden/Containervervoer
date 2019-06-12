@@ -2,7 +2,7 @@
 
 namespace ContainervervoerCasus.Models
 {
-    public enum BalansPosition { Left = 0, Middle = 1, Right = 2 };
+    
     public class Stack
     {
         // Fields
@@ -13,9 +13,16 @@ namespace ContainervervoerCasus.Models
         public int Column { get; set; }
 
         // Constructors
-        public Stack()
+        public Stack(int row, int column)
         {
+            Row = row;
+            Column = column;
+            BalansPosition = BalansPosition.Left;
+        }
 
+        public override string ToString()
+        {
+            return "[Row: " + Row + "] [Column: " + Column + "]";
         }
     }
 }

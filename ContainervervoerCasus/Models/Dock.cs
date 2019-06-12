@@ -5,14 +5,29 @@ namespace ContainervervoerCasus.Models
     public class Dock
     {
         // Fields
-        public int DockID { get; set; }
-        public CargoShip CargoShip { get; set; }
-        public List<Container> Containers { get; set; }
+        public int DockID { get; set; } // Probally unnecessary
+        public List<CargoShip> CargoShips = new List<CargoShip>();
+        public List<Container> Containers = new List<Container>();
+
+        public static int TotalWeightContainers;
+        public static int TotalRegularContainers;
+        public static int TotalValuableContainers;
+        public static int TotalCooledContainers;
 
         // Constructors
         public Dock()
         {
 
+        }
+
+        public void AddContainer(Container container)
+        {
+            Containers.Add(container);
+        }
+
+        public void AddCargoShips(CargoShip cargoShip)
+        {
+            CargoShips.Add(cargoShip);
         }
     }
 }

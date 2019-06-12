@@ -6,8 +6,11 @@
         {
             Weight = weight;
             ContainerType = containerType;
-            TotalWeightContainers += weight;
-            TotalCooledContainers++;
+            MaximumCarryWeight = 30;
+            IsCarying = 0;
+
+            Dock.TotalWeightContainers += weight;
+            Dock.TotalCooledContainers++;
         }
     }
 }
