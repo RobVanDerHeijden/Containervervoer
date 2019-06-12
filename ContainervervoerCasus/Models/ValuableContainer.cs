@@ -6,6 +6,8 @@
         {
             Weight = weight;
             ContainerType = containerType;
+            TotalWeightContainers += weight;
+            TotalValuableContainers++;
         }
     }
 }
