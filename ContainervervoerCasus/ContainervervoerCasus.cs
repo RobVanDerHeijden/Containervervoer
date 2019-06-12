@@ -92,13 +92,58 @@ namespace ContainervervoerCasus
             Lbx_Stacks.Items.Clear();
             if (Lbx_CargoShips.SelectedIndex != -1)
             {
-                CargoShip cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
-                foreach (Stack stack in cargoShip.Stacks)
+                if (DGV_Stacks.DataSource != null)
                 {
-                    Lbx_Stacks.Items.Add(stack);
+                    DGV_Stacks.DataSource = null;
+                }
+                CargoShip cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+
+                DataTable dt = new DataTable();
+                DGV_Stacks.DataSource = dt;
+                
+                string[] row = new string[cargoShip.Width];
+                
+                for (int j = 0; j < cargoShip.Width; j++)
+                {
+                    dt.Columns.Add("Column: " + j);
+                }
+                int counter = 0;
+                for (int currentRow = 0; currentRow < cargoShip.Length; currentRow++)
+                {
+                    DataRow dr = dt.NewRow();
+                    
+                    for (int currentColumn = 0; currentColumn < cargoShip.Width; currentColumn++)
+                    {
+                        int amountContainers = 0;
+                        if (cargoShip.Stacks[counter].Containers != null)
+                        {
+                            amountContainers = cargoShip.Stacks[counter].Containers.Count;
+                        }
+                        int stackId = cargoShip.Stacks[counter].StackID;
+
+                        dr[currentColumn] = stackId + " =ID | Containers: " + amountContainers;
+                        counter++;
+                    }
+                    dt.Rows.Add(dr);
                 }
             }
             
+        }
+
+        private void DGV_Stacks_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //MessageBox.Show("yikes");
+            //if (DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            //{
+            //    DGV_Stacks.CurrentCell.Selected = true;
+            //}
+            if (DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                MessageBox.Show(cellContent);
+                int stackId = cellContent[0];
+
+            }
         }
     }
 }
