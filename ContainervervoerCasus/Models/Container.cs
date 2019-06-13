@@ -6,8 +6,8 @@
         // Fields
         public int ContainerID { get; set; }
         public int Weight { get; set; }
-        public int MinimumWeight = 4;
-        public int MaximumWeight = 30;
+        public static int MinimumWeight = 4;
+        public static int MaximumWeight = 30;
         public int MaximumCarryWeight { get; set; }
         public int IsCarying { get; set; }
         public ContainerType ContainerType { get; set; }

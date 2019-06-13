@@ -64,7 +64,7 @@ namespace ContainervervoerCasus
 
         private void Btn_ResetContainers_Click(object sender, EventArgs e)
         {
-            _dock.Containers.Clear();
+            _dock.AllContainers.Clear();
             Lbx_Containers.Items.Clear();
             Models.Dock.TotalRegularContainers = 0;
             Models.Dock.TotalValuableContainers = 0;
@@ -86,6 +86,7 @@ namespace ContainervervoerCasus
         {
             _dock.CargoShips.Clear();
             Lbx_CargoShips.Items.Clear();
+            Lbx_StackContainers.Items.Clear();
 
             UpdateContainerStats();
         }
@@ -132,56 +133,55 @@ namespace ContainervervoerCasus
 
         private void DGV_Stacks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Lbx_StackContainers.Items.Clear();
             int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
-            //MessageBox.Show("StackId: " + stackId);
-            _cargoShip.FindStackWithId(stackId);
+            Stack stacko = _cargoShip.FindStackWithId(stackId);
+            foreach (var conto in stacko.Containers)
+            {
+                Lbx_StackContainers.Items.Add(conto);
+            }
         }
 
         private void Btn_AddContainerToStack_Click(object sender, EventArgs e)
         {
+            Lbx_StackContainers.Items.Clear();
             int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
+            
+            _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
             Stack selectedStack = _cargoShip.FindStackWithId(stackId);
             Container selectedContainer = Lbx_Containers.SelectedItem as Container;
-            _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+
             selectedStack.AddContainer(selectedContainer);
-            MessageBox.Show(selectedStack.Containers.Count.ToString());
+            foreach (var conto in selectedStack.Containers)
+            {
+                Lbx_StackContainers.Items.Add(conto);
+            }
+
+            _dock.AllContainers.Remove(Lbx_Containers.SelectedItems[0] as Container);
+            Lbx_Containers.Items.Remove(Lbx_Containers.SelectedItems[0]);
         }
 
         private void Btn_AddRandomContainers_Click(object sender, EventArgs e)
         {
+            Lbx_Containers.Items.Clear();
             int amountContainersToMake = (int)Nud_RandomContainers.Value;
-            Random random = new Random();
-            for (int i = 0; i < amountContainersToMake; i++)
+            _dock.AddRandomContainers(amountContainersToMake);
+            
+            foreach (var newContainer in _dock.AllContainers)
             {
-                Array values = Enum.GetValues(typeof(ContainerType));
-                ContainerType type = (ContainerType)values.GetValue(random.Next(values.Length));
-                int randomWeight = random.Next(4, 31);
-
-                if (type == ContainerType.Regular)
-                {
-                    Container newContainer = new Container(randomWeight, type);
-                    _dock.AddContainer(newContainer);
-                    Lbx_Containers.Items.Add(newContainer);
-                }
-                else if (type == ContainerType.Valuable)
-                {
-                    ValuableContainer newContainer = new ValuableContainer(randomWeight, type);
-                    _dock.AddContainer(newContainer);
-                    Lbx_Containers.Items.Add(newContainer);
-                }
-                else if (type == ContainerType.Cooled)
-                {
-                    CooledContainer newContainer = new CooledContainer(randomWeight, type);
-                    _dock.AddContainer(newContainer);
-                    Lbx_Containers.Items.Add(newContainer);
-                }
-
-                UpdateContainerStats();
+                Lbx_Containers.Items.Add(newContainer);
             }
+            UpdateContainerStats();
+        }
 
-            
-            
-            
+        private void Btn_SortContainers_Click(object sender, EventArgs e)
+        {
+            _dock.SplitListContainers();
+            Lbx_Containers.Items.Clear();
+            foreach (var conto in _dock.AllContainers)
+            {
+                Lbx_Containers.Items.Add(conto);
+            }
         }
     }
 }

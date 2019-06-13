@@ -30,12 +30,15 @@
         {
             this.Lbl_Containers = new System.Windows.Forms.Label();
             this.Grbx_ContainerStats = new System.Windows.Forms.GroupBox();
+            this.Lbl_TotalContainers = new System.Windows.Forms.Label();
             this.Lbl_TotalContainerWeight = new System.Windows.Forms.Label();
             this.Lbl_TotalCooled = new System.Windows.Forms.Label();
             this.Lbl_TotalRegular = new System.Windows.Forms.Label();
             this.Lbl_TotalValuable = new System.Windows.Forms.Label();
             this.Grbx_AddContainer = new System.Windows.Forms.GroupBox();
+            this.Nud_RandomContainers = new System.Windows.Forms.NumericUpDown();
             this.Nud_ContainerWeight = new System.Windows.Forms.NumericUpDown();
+            this.Btn_AddRandomContainers = new System.Windows.Forms.Button();
             this.Lbl_ContainerWeight = new System.Windows.Forms.Label();
             this.Lbl_ContainerType = new System.Windows.Forms.Label();
             this.Cbbx_ContainerType = new System.Windows.Forms.ComboBox();
@@ -54,17 +57,15 @@
             this.Lbx_StackContainers = new System.Windows.Forms.ListBox();
             this.DGV_Stacks = new System.Windows.Forms.DataGridView();
             this.Btn_AddContainerToStack = new System.Windows.Forms.Button();
-            this.Btn_AddRandomContainers = new System.Windows.Forms.Button();
-            this.Nud_RandomContainers = new System.Windows.Forms.NumericUpDown();
-            this.Lbl_TotalContainers = new System.Windows.Forms.Label();
+            this.Btn_SortContainers = new System.Windows.Forms.Button();
             this.Grbx_ContainerStats.SuspendLayout();
             this.Grbx_AddContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_ContainerWeight)).BeginInit();
             this.Grbx_AddCargoShip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Stacks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).BeginInit();
             this.SuspendLayout();
             // 
             // Lbl_Containers
@@ -89,6 +90,15 @@
             this.Grbx_ContainerStats.TabIndex = 26;
             this.Grbx_ContainerStats.TabStop = false;
             this.Grbx_ContainerStats.Text = "Container Stats";
+            // 
+            // Lbl_TotalContainers
+            // 
+            this.Lbl_TotalContainers.AutoSize = true;
+            this.Lbl_TotalContainers.Location = new System.Drawing.Point(4, 86);
+            this.Lbl_TotalContainers.Name = "Lbl_TotalContainers";
+            this.Lbl_TotalContainers.Size = new System.Drawing.Size(126, 17);
+            this.Lbl_TotalContainers.TabIndex = 15;
+            this.Lbl_TotalContainers.Text = "Total containers: 0";
             // 
             // Lbl_TotalContainerWeight
             // 
@@ -142,6 +152,23 @@
             this.Grbx_AddContainer.TabStop = false;
             this.Grbx_AddContainer.Text = "Add Container";
             // 
+            // Nud_RandomContainers
+            // 
+            this.Nud_RandomContainers.Location = new System.Drawing.Point(6, 159);
+            this.Nud_RandomContainers.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Nud_RandomContainers.Name = "Nud_RandomContainers";
+            this.Nud_RandomContainers.Size = new System.Drawing.Size(57, 22);
+            this.Nud_RandomContainers.TabIndex = 11;
+            this.Nud_RandomContainers.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Nud_ContainerWeight
             // 
             this.Nud_ContainerWeight.Location = new System.Drawing.Point(10, 85);
@@ -163,6 +190,16 @@
             0,
             0,
             0});
+            // 
+            // Btn_AddRandomContainers
+            // 
+            this.Btn_AddRandomContainers.Location = new System.Drawing.Point(69, 153);
+            this.Btn_AddRandomContainers.Name = "Btn_AddRandomContainers";
+            this.Btn_AddRandomContainers.Size = new System.Drawing.Size(141, 33);
+            this.Btn_AddRandomContainers.TabIndex = 11;
+            this.Btn_AddRandomContainers.Text = "Random Containers";
+            this.Btn_AddRandomContainers.UseVisualStyleBackColor = true;
+            this.Btn_AddRandomContainers.Click += new System.EventHandler(this.Btn_AddRandomContainers_Click);
             // 
             // Lbl_ContainerWeight
             // 
@@ -362,47 +399,22 @@
             this.Btn_AddContainerToStack.UseVisualStyleBackColor = true;
             this.Btn_AddContainerToStack.Click += new System.EventHandler(this.Btn_AddContainerToStack_Click);
             // 
-            // Btn_AddRandomContainers
+            // Btn_SortContainers
             // 
-            this.Btn_AddRandomContainers.Location = new System.Drawing.Point(69, 153);
-            this.Btn_AddRandomContainers.Name = "Btn_AddRandomContainers";
-            this.Btn_AddRandomContainers.Size = new System.Drawing.Size(141, 33);
-            this.Btn_AddRandomContainers.TabIndex = 11;
-            this.Btn_AddRandomContainers.Text = "Random Containers";
-            this.Btn_AddRandomContainers.UseVisualStyleBackColor = true;
-            this.Btn_AddRandomContainers.Click += new System.EventHandler(this.Btn_AddRandomContainers_Click);
-            // 
-            // Nud_RandomContainers
-            // 
-            this.Nud_RandomContainers.Location = new System.Drawing.Point(6, 159);
-            this.Nud_RandomContainers.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.Nud_RandomContainers.Name = "Nud_RandomContainers";
-            this.Nud_RandomContainers.Size = new System.Drawing.Size(57, 22);
-            this.Nud_RandomContainers.TabIndex = 11;
-            this.Nud_RandomContainers.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // Lbl_TotalContainers
-            // 
-            this.Lbl_TotalContainers.AutoSize = true;
-            this.Lbl_TotalContainers.Location = new System.Drawing.Point(4, 86);
-            this.Lbl_TotalContainers.Name = "Lbl_TotalContainers";
-            this.Lbl_TotalContainers.Size = new System.Drawing.Size(126, 17);
-            this.Lbl_TotalContainers.TabIndex = 15;
-            this.Lbl_TotalContainers.Text = "Total containers: 0";
+            this.Btn_SortContainers.Location = new System.Drawing.Point(645, 167);
+            this.Btn_SortContainers.Name = "Btn_SortContainers";
+            this.Btn_SortContainers.Size = new System.Drawing.Size(129, 116);
+            this.Btn_SortContainers.TabIndex = 40;
+            this.Btn_SortContainers.Text = "SortContainers";
+            this.Btn_SortContainers.UseVisualStyleBackColor = true;
+            this.Btn_SortContainers.Click += new System.EventHandler(this.Btn_SortContainers_Click);
             // 
             // ContainervervoerCasus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1414, 602);
+            this.Controls.Add(this.Btn_SortContainers);
             this.Controls.Add(this.Btn_AddContainerToStack);
             this.Controls.Add(this.DGV_Stacks);
             this.Controls.Add(this.Lbx_StackContainers);
@@ -422,13 +434,13 @@
             this.Grbx_ContainerStats.PerformLayout();
             this.Grbx_AddContainer.ResumeLayout(false);
             this.Grbx_AddContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_ContainerWeight)).EndInit();
             this.Grbx_AddCargoShip.ResumeLayout(false);
             this.Grbx_AddCargoShip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Stacks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,6 +476,7 @@
         private System.Windows.Forms.Button Btn_AddRandomContainers;
         private System.Windows.Forms.NumericUpDown Nud_RandomContainers;
         private System.Windows.Forms.Label Lbl_TotalContainers;
+        private System.Windows.Forms.Button Btn_SortContainers;
     }
 }
 
