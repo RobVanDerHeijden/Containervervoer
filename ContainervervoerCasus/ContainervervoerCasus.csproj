@@ -54,12 +54,10 @@
       <DependentUpon>ContainervervoerCasus.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CargoShip.cs" />
-    <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\CooledContainer.cs" />
     <Compile Include="Models\Dock.cs" />
     <Compile Include="Models\Enums.cs" />
-    <Compile Include="Models\Row.cs" />
     <Compile Include="Models\Stack.cs" />
     <Compile Include="Models\ValuableContainer.cs" />
     <Compile Include="Program.cs" />

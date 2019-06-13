@@ -14,12 +14,12 @@ namespace ContainervervoerCasus.Models
         public int Column { get; set; }
 
         // Constructors
-        public Stack(int row, int column)
+        public Stack(int row, int column, BalansPosition balansPosition)
         {
             StackID = Increment;
             Row = row;
             Column = column;
-            BalansPosition = BalansPosition.Left;
+            BalansPosition = balansPosition;
             Increment++;
         }
 

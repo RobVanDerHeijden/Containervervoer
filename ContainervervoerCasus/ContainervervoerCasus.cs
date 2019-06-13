@@ -100,9 +100,7 @@ namespace ContainervervoerCasus
 
                 DataTable dt = new DataTable();
                 DGV_Stacks.DataSource = dt;
-                
-                string[] row = new string[cargoShip.Width];
-                
+
                 for (int j = 0; j < cargoShip.Width; j++)
                 {
                     dt.Columns.Add("Column: " + j);
@@ -132,18 +130,29 @@ namespace ContainervervoerCasus
 
         private void DGV_Stacks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //MessageBox.Show("yikes");
+            //if (DGV_Stacks.Rows[e.RowIndex]. != -1)
+            //{
+
+            //}
+            //MessageBox.Show(DGV_Stacks.CurrentCell.Value.ToString());
+            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Substring(0, 1));
+            MessageBox.Show("StackId: " + stackId);
+            //if (DGV_Stacks.SelectedCells.Count > 0)
+            //{
+            //    string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //    //MessageBox.Show(cellContent);
+            //    int stackId = Convert.ToInt32(cellContent.Substring(0, 1));
+            //    MessageBox.Show("StackId: " + stackId);
+            //}
+
             //if (DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             //{
-            //    DGV_Stacks.CurrentCell.Selected = true;
-            //}
-            if (DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            {
-                string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                MessageBox.Show(cellContent);
-                int stackId = cellContent[0];
+            //    string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //    //MessageBox.Show(cellContent);
+            //    int stackId = Convert.ToInt32(cellContent.Substring(0, 1));
+            //    MessageBox.Show("StackId: " + stackId);
 
-            }
+            //}
         }
     }
 }

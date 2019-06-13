@@ -16,12 +16,10 @@ namespace ContainervervoerCasus.Models
         public int IsCarying { get; set; }
         public int Width { get; set; } //columns
         public int Length { get; set; } //rows
-        //public int Height { get; set; }
         // maxgekoeld??
-        //public int [,,] ContainerLocations; /*= new int[x=W,2,3];*/
 
         // Constructors
-        public CargoShip(int width, /*int height,*/ int length)
+        public CargoShip(int width, int length)
         {
             Width = width;
             Length = length;
@@ -30,13 +28,27 @@ namespace ContainervervoerCasus.Models
                 for (int j = 0; j < width; j++) // for each column in the row
                 {
                     // if j > width/2 left
-                    AddStack(new Stack(i,j));
+                    // CASE: Width = 3 ->
+                    // 0 < (2) / 2 = Left
+                    // 1 == (2) / 2 = Middle
+                    // 2 > (2) / 2 = Right
+                    BalansPosition balansPosition = BalansPosition.None;
+                    if (j < (width-1) / 2)
+                    {
+                        balansPosition = BalansPosition.Left;
+                    } else if (j == (width - 1) / 2)
+                    {
+                        balansPosition = BalansPosition.Middle;
+                    }
+                    else if (j > (width - 1) / 2)
+                    {
+                        balansPosition = BalansPosition.Right;
+                    }
+                    AddStack(new Stack(i,j, balansPosition));
 
                 }
             }
-            //Height = height;
             MaximumCarryWeight = width * length * 150; 
-            //ContainerLocations = new int[width, height, length];
         }
         public void AddStack(Stack stack)
         {

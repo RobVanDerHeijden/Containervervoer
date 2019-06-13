@@ -329,9 +329,13 @@
             // 
             // DGV_Stacks
             // 
+            this.DGV_Stacks.AllowUserToAddRows = false;
+            this.DGV_Stacks.AllowUserToDeleteRows = false;
             this.DGV_Stacks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_Stacks.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DGV_Stacks.Location = new System.Drawing.Point(639, 27);
             this.DGV_Stacks.Name = "DGV_Stacks";
+            this.DGV_Stacks.ReadOnly = true;
             this.DGV_Stacks.RowTemplate.Height = 24;
             this.DGV_Stacks.Size = new System.Drawing.Size(495, 466);
             this.DGV_Stacks.TabIndex = 39;
