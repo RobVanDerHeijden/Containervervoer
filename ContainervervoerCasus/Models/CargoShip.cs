@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ContainervervoerCasus.Models
 {
@@ -53,6 +55,16 @@ namespace ContainervervoerCasus.Models
         public void AddStack(Stack stack)
         {
             Stacks.Add(stack);
+        }
+
+        public Stack FindStackWithId(int stackId)
+        {
+            //Stack result = list.Find(item => item > 20);
+            Stack result = (from a in Stacks
+                          where a.StackID == stackId
+                select a).SingleOrDefault();
+            //MessageBox.Show("Result:" + result);
+            return result;
         }
 
         public void AddWeightLeftSide(int weight)

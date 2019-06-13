@@ -51,8 +51,9 @@
             this.Lbl_CargoShipLength = new System.Windows.Forms.Label();
             this.Nud_CargoShipWidth = new System.Windows.Forms.NumericUpDown();
             this.Nud_CargoShipLength = new System.Windows.Forms.NumericUpDown();
-            this.Lbx_Stacks = new System.Windows.Forms.ListBox();
+            this.Lbx_StackContainers = new System.Windows.Forms.ListBox();
             this.DGV_Stacks = new System.Windows.Forms.DataGridView();
+            this.Btn_AddContainerToStack = new System.Windows.Forms.Button();
             this.Grbx_ContainerStats.SuspendLayout();
             this.Grbx_AddContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_ContainerWeight)).BeginInit();
@@ -318,14 +319,14 @@
             0,
             0});
             // 
-            // Lbx_Stacks
+            // Lbx_StackContainers
             // 
-            this.Lbx_Stacks.FormattingEnabled = true;
-            this.Lbx_Stacks.ItemHeight = 16;
-            this.Lbx_Stacks.Location = new System.Drawing.Point(238, 377);
-            this.Lbx_Stacks.Name = "Lbx_Stacks";
-            this.Lbx_Stacks.Size = new System.Drawing.Size(356, 116);
-            this.Lbx_Stacks.TabIndex = 38;
+            this.Lbx_StackContainers.FormattingEnabled = true;
+            this.Lbx_StackContainers.ItemHeight = 16;
+            this.Lbx_StackContainers.Location = new System.Drawing.Point(1046, 380);
+            this.Lbx_StackContainers.Name = "Lbx_StackContainers";
+            this.Lbx_StackContainers.Size = new System.Drawing.Size(356, 116);
+            this.Lbx_StackContainers.TabIndex = 38;
             // 
             // DGV_Stacks
             // 
@@ -333,21 +334,35 @@
             this.DGV_Stacks.AllowUserToDeleteRows = false;
             this.DGV_Stacks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Stacks.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.DGV_Stacks.Location = new System.Drawing.Point(639, 27);
+            this.DGV_Stacks.Location = new System.Drawing.Point(780, 27);
             this.DGV_Stacks.Name = "DGV_Stacks";
             this.DGV_Stacks.ReadOnly = true;
+            this.DGV_Stacks.RowHeadersVisible = false;
             this.DGV_Stacks.RowTemplate.Height = 24;
-            this.DGV_Stacks.Size = new System.Drawing.Size(495, 466);
+            this.DGV_Stacks.ShowCellToolTips = false;
+            this.DGV_Stacks.ShowEditingIcon = false;
+            this.DGV_Stacks.Size = new System.Drawing.Size(622, 347);
             this.DGV_Stacks.TabIndex = 39;
             this.DGV_Stacks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Stacks_CellContentClick);
+            // 
+            // Btn_AddContainerToStack
+            // 
+            this.Btn_AddContainerToStack.Location = new System.Drawing.Point(546, 429);
+            this.Btn_AddContainerToStack.Name = "Btn_AddContainerToStack";
+            this.Btn_AddContainerToStack.Size = new System.Drawing.Size(186, 50);
+            this.Btn_AddContainerToStack.TabIndex = 13;
+            this.Btn_AddContainerToStack.Text = "Add Selected Container To Stack";
+            this.Btn_AddContainerToStack.UseVisualStyleBackColor = true;
+            this.Btn_AddContainerToStack.Click += new System.EventHandler(this.Btn_AddContainerToStack_Click);
             // 
             // ContainervervoerCasus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1159, 547);
+            this.ClientSize = new System.Drawing.Size(1414, 602);
+            this.Controls.Add(this.Btn_AddContainerToStack);
             this.Controls.Add(this.DGV_Stacks);
-            this.Controls.Add(this.Lbx_Stacks);
+            this.Controls.Add(this.Lbx_StackContainers);
             this.Controls.Add(this.Lbl_CargoShip);
             this.Controls.Add(this.Grbx_AddCargoShip);
             this.Controls.Add(this.Btn_ResetCargoShip);
@@ -399,8 +414,9 @@
         private System.Windows.Forms.Label Lbl_CargoShipLength;
         private System.Windows.Forms.NumericUpDown Nud_CargoShipLength;
         private System.Windows.Forms.NumericUpDown Nud_CargoShipWidth;
-        private System.Windows.Forms.ListBox Lbx_Stacks;
+        private System.Windows.Forms.ListBox Lbx_StackContainers;
         private System.Windows.Forms.DataGridView DGV_Stacks;
+        private System.Windows.Forms.Button Btn_AddContainerToStack;
     }
 }
 

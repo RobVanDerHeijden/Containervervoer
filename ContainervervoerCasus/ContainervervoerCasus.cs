@@ -14,10 +14,12 @@ namespace ContainervervoerCasus
     {
         // Fields + objecten aanmaken
         Dock _dock = new Dock();
+        CargoShip _cargoShip;
 
         public ContainervervoerCasus()
         {
             InitializeComponent();
+           
         }
         
         private void Btn_AddContainer_Click(object sender, EventArgs e)
@@ -89,70 +91,63 @@ namespace ContainervervoerCasus
 
         private void Lbx_CargoShips_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Lbx_Stacks.Items.Clear();
+            Lbx_StackContainers.Items.Clear();
             if (Lbx_CargoShips.SelectedIndex != -1)
             {
                 if (DGV_Stacks.DataSource != null)
                 {
                     DGV_Stacks.DataSource = null;
                 }
-                CargoShip cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+                _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
 
                 DataTable dt = new DataTable();
                 DGV_Stacks.DataSource = dt;
 
-                for (int j = 0; j < cargoShip.Width; j++)
+                for (int j = 0; j < _cargoShip.Width; j++)
                 {
                     dt.Columns.Add("Column: " + j);
                 }
                 int counter = 0;
-                for (int currentRow = 0; currentRow < cargoShip.Length; currentRow++)
+                for (int currentRow = 0; currentRow < _cargoShip.Length; currentRow++)
                 {
                     DataRow dr = dt.NewRow();
                     
-                    for (int currentColumn = 0; currentColumn < cargoShip.Width; currentColumn++)
+                    for (int currentColumn = 0; currentColumn < _cargoShip.Width; currentColumn++)
                     {
                         int amountContainers = 0;
-                        if (cargoShip.Stacks[counter].Containers != null)
+                        if (_cargoShip.Stacks[counter].Containers != null)
                         {
-                            amountContainers = cargoShip.Stacks[counter].Containers.Count;
+                            amountContainers = _cargoShip.Stacks[counter].Containers.Count;
                         }
-                        int stackId = cargoShip.Stacks[counter].StackID;
+                        int stackId = _cargoShip.Stacks[counter].StackID;
 
-                        dr[currentColumn] = stackId + " =ID | Containers: " + amountContainers;
+                        dr[currentColumn] = stackId + ";=ID | Containers[" + amountContainers + "]";
                         counter++;
                     }
                     dt.Rows.Add(dr);
                 }
             }
-            
         }
 
         private void DGV_Stacks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (DGV_Stacks.Rows[e.RowIndex]. != -1)
-            //{
+            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
+            //MessageBox.Show("StackId: " + stackId);
+            _cargoShip.FindStackWithId(stackId);
+            //int result = list.Find(item => item > 20);
 
-            //}
-            //MessageBox.Show(DGV_Stacks.CurrentCell.Value.ToString());
-            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Substring(0, 1));
-            MessageBox.Show("StackId: " + stackId);
-            //if (DGV_Stacks.SelectedCells.Count > 0)
-            //{
-            //    string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //    //MessageBox.Show(cellContent);
-            //    int stackId = Convert.ToInt32(cellContent.Substring(0, 1));
-            //    MessageBox.Show("StackId: " + stackId);
-            //}
+            //Console.WriteLine(result);
 
-            //if (DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            //{
-            //    string cellContent = DGV_Stacks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //    //MessageBox.Show(cellContent);
-            //    int stackId = Convert.ToInt32(cellContent.Substring(0, 1));
-            //    MessageBox.Show("StackId: " + stackId);
+        }
 
-            //}
+        private void Btn_AddContainerToStack_Click(object sender, EventArgs e)
+        {
+            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
+            Stack selectedStack = _cargoShip.FindStackWithId(stackId);
+            Container selectedContainer = Lbx_Containers.SelectedItem as Container;
+            _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+            selectedStack.AddContainer(selectedContainer);
+            MessageBox.Show(selectedStack.Containers.Count.ToString());
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ContainervervoerCasus.Models
         protected static int Increment;
         // Fields
         public int StackID { get; set; }
-        public List<Container> Containers { get; set; }
+        public List<Container> Containers = new List<Container>();
         public BalansPosition BalansPosition { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
@@ -23,9 +23,14 @@ namespace ContainervervoerCasus.Models
             Increment++;
         }
 
+        public void AddContainer(Container container)
+        {
+            Containers.Add(container);
+        }
+
         public override string ToString()
         {
-            return "[Row: " + Row + "] [Column: " + Column + "]";
+            return "[Row: " + Row + "] [Column: " + Column + "] [BalansPosition: " + BalansPosition + "]";
         }
     }
 }
