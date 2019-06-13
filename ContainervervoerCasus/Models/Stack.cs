@@ -5,7 +5,7 @@ namespace ContainervervoerCasus.Models
     
     public class Stack
     {
-        protected static int Increment;
+        protected static int StackIncrement;
         // Fields
         public int StackID { get; set; }
         public List<Container> Containers = new List<Container>();
@@ -16,11 +16,11 @@ namespace ContainervervoerCasus.Models
         // Constructors
         public Stack(int row, int column, BalansPosition balansPosition)
         {
-            StackID = Increment;
+            StackID = StackIncrement;
             Row = row;
             Column = column;
             BalansPosition = balansPosition;
-            Increment++;
+            StackIncrement++;
         }
 
         public void AddContainer(Container container)

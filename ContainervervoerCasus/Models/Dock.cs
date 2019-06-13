@@ -13,6 +13,7 @@ namespace ContainervervoerCasus.Models
         public static int TotalRegularContainers;
         public static int TotalValuableContainers;
         public static int TotalCooledContainers;
+        public static int TotalContainers;
 
         // Constructors
         public Dock()

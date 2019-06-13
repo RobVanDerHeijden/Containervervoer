@@ -10,6 +10,7 @@
             IsCarying = 0;
 
             Dock.TotalWeightContainers += weight;
+            Dock.TotalContainers++;
             Dock.TotalCooledContainers++;
         }
     }

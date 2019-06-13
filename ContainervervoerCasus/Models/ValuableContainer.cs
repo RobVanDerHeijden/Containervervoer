@@ -10,6 +10,7 @@
             ContainerType = containerType;
 
             Dock.TotalWeightContainers += weight;
+            Dock.TotalContainers++;
             Dock.TotalValuableContainers++;
         }
     }

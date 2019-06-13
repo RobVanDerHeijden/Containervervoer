@@ -2,6 +2,7 @@
 {
     public class Container
     {
+        protected static int ContainerIncrement;
         // Fields
         public int ContainerID { get; set; }
         public int Weight { get; set; }
@@ -15,12 +16,13 @@
         // Constructors
         public Container()
         {
-
-
+            ContainerID = ContainerIncrement;
+            ContainerIncrement++;
         }
 
         public Container(int weight, ContainerType containerType)
         {
+            ContainerID = ContainerIncrement;
             Weight = weight;
             MaximumCarryWeight = 30;
             IsCarying = 0;
@@ -32,11 +34,14 @@
                 Dock.TotalRegularContainers++;
             }
             Dock.TotalWeightContainers += weight;
+            Dock.TotalContainers++;
+            
+            ContainerIncrement++;
         }
         
         public override string ToString()
         {
-            return "[" + Weight + "] " + ContainerType;
+            return ContainerID + ";ID [" + Weight + "] " + ContainerType;
         }
     }
 }

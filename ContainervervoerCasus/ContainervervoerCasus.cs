@@ -60,6 +60,7 @@ namespace ContainervervoerCasus
             Lbl_TotalValuable.Text = "Total Valuable: " + Models.Dock.TotalValuableContainers;
             Lbl_TotalCooled.Text = "Total Cooled: " + Models.Dock.TotalCooledContainers;
             Lbl_TotalContainerWeight.Text = "Total weight all containers: " + Models.Dock.TotalWeightContainers;
+            Lbl_TotalContainers.Text = "Total containers: " + Models.Dock.TotalContainers;
         }
 
         private void Btn_ResetContainers_Click(object sender, EventArgs e)
@@ -70,6 +71,7 @@ namespace ContainervervoerCasus
             Models.Dock.TotalValuableContainers = 0;
             Models.Dock.TotalCooledContainers = 0;
             Models.Dock.TotalWeightContainers = 0;
+            Models.Dock.TotalContainers = 0;
 
             UpdateContainerStats();
         }
@@ -148,6 +150,43 @@ namespace ContainervervoerCasus
             _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
             selectedStack.AddContainer(selectedContainer);
             MessageBox.Show(selectedStack.Containers.Count.ToString());
+        }
+
+        private void Btn_AddRandomContainers_Click(object sender, EventArgs e)
+        {
+            int amountContainersToMake = (int)Nud_RandomContainers.Value;
+            Random random = new Random();
+            for (int i = 0; i < amountContainersToMake; i++)
+            {
+                Array values = Enum.GetValues(typeof(ContainerType));
+                
+                ContainerType type = (ContainerType)values.GetValue(random.Next(values.Length));
+                int randomWeight = random.Next(4, 30);
+                if (type == ContainerType.Regular)
+                {
+                    Container newContainer = new Container(randomWeight, type);
+                    _dock.AddContainer(newContainer);
+                    Lbx_Containers.Items.Add(newContainer);
+                }
+                else if (type == ContainerType.Valuable)
+                {
+                    ValuableContainer newContainer = new ValuableContainer(randomWeight, type);
+                    _dock.AddContainer(newContainer);
+                    Lbx_Containers.Items.Add(newContainer);
+                }
+                else if (type == ContainerType.Cooled)
+                {
+                    CooledContainer newContainer = new CooledContainer(randomWeight, type);
+                    _dock.AddContainer(newContainer);
+                    Lbx_Containers.Items.Add(newContainer);
+                }
+
+                UpdateContainerStats();
+            }
+
+            
+            
+            
         }
     }
 }
