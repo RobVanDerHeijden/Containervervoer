@@ -12,7 +12,6 @@
         public int IsCarying { get; set; }
         public ContainerType ContainerType { get; set; }
         
-        
         // Constructors
         public Container()
         {
@@ -27,8 +26,7 @@
             MaximumCarryWeight = 30;
             IsCarying = 0;
             ContainerType = containerType;
-
-
+            
             if (containerType == ContainerType.Regular)
             {
                 Dock.TotalRegularContainers++;

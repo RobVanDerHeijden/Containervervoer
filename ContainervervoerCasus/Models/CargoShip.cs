@@ -59,11 +59,9 @@ namespace ContainervervoerCasus.Models
 
         public Stack FindStackWithId(int stackId)
         {
-            //Stack result = list.Find(item => item > 20);
             Stack result = (from a in Stacks
                           where a.StackID == stackId
                 select a).SingleOrDefault();
-            //MessageBox.Show("Result:" + result);
             return result;
         }
 

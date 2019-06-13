@@ -5,7 +5,7 @@ namespace ContainervervoerCasus.Models
     public class Dock
     {
         // Fields
-        public int DockID { get; set; } // Probally unnecessary
+        public int DockID { get; set; } // Probally unnecessary 
         public List<CargoShip> CargoShips = new List<CargoShip>();
         public List<Container> Containers = new List<Container>();
 

@@ -19,7 +19,6 @@ namespace ContainervervoerCasus
         public ContainervervoerCasus()
         {
             InitializeComponent();
-           
         }
         
         private void Btn_AddContainer_Click(object sender, EventArgs e)
@@ -136,10 +135,6 @@ namespace ContainervervoerCasus
             int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
             //MessageBox.Show("StackId: " + stackId);
             _cargoShip.FindStackWithId(stackId);
-            //int result = list.Find(item => item > 20);
-
-            //Console.WriteLine(result);
-
         }
 
         private void Btn_AddContainerToStack_Click(object sender, EventArgs e)
@@ -159,9 +154,9 @@ namespace ContainervervoerCasus
             for (int i = 0; i < amountContainersToMake; i++)
             {
                 Array values = Enum.GetValues(typeof(ContainerType));
-                
                 ContainerType type = (ContainerType)values.GetValue(random.Next(values.Length));
-                int randomWeight = random.Next(4, 30);
+                int randomWeight = random.Next(4, 31);
+
                 if (type == ContainerType.Regular)
                 {
                     Container newContainer = new Container(randomWeight, type);

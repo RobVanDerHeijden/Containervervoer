@@ -70,7 +70,7 @@
             // Lbl_Containers
             // 
             this.Lbl_Containers.AutoSize = true;
-            this.Lbl_Containers.Location = new System.Drawing.Point(9, 7);
+            this.Lbl_Containers.Location = new System.Drawing.Point(416, 9);
             this.Lbl_Containers.Name = "Lbl_Containers";
             this.Lbl_Containers.Size = new System.Drawing.Size(76, 17);
             this.Lbl_Containers.TabIndex = 27;
@@ -83,7 +83,7 @@
             this.Grbx_ContainerStats.Controls.Add(this.Lbl_TotalCooled);
             this.Grbx_ContainerStats.Controls.Add(this.Lbl_TotalRegular);
             this.Grbx_ContainerStats.Controls.Add(this.Lbl_TotalValuable);
-            this.Grbx_ContainerStats.Location = new System.Drawing.Point(12, 408);
+            this.Grbx_ContainerStats.Location = new System.Drawing.Point(419, 399);
             this.Grbx_ContainerStats.Name = "Grbx_ContainerStats";
             this.Grbx_ContainerStats.Size = new System.Drawing.Size(220, 118);
             this.Grbx_ContainerStats.TabIndex = 26;
@@ -128,14 +128,16 @@
             // 
             // Grbx_AddContainer
             // 
+            this.Grbx_AddContainer.Controls.Add(this.Nud_RandomContainers);
             this.Grbx_AddContainer.Controls.Add(this.Nud_ContainerWeight);
+            this.Grbx_AddContainer.Controls.Add(this.Btn_AddRandomContainers);
             this.Grbx_AddContainer.Controls.Add(this.Lbl_ContainerWeight);
             this.Grbx_AddContainer.Controls.Add(this.Lbl_ContainerType);
             this.Grbx_AddContainer.Controls.Add(this.Cbbx_ContainerType);
             this.Grbx_AddContainer.Controls.Add(this.Btn_AddContainer);
-            this.Grbx_AddContainer.Location = new System.Drawing.Point(12, 197);
+            this.Grbx_AddContainer.Location = new System.Drawing.Point(419, 199);
             this.Grbx_AddContainer.Name = "Grbx_AddContainer";
-            this.Grbx_AddContainer.Size = new System.Drawing.Size(220, 166);
+            this.Grbx_AddContainer.Size = new System.Drawing.Size(220, 194);
             this.Grbx_AddContainer.TabIndex = 25;
             this.Grbx_AddContainer.TabStop = false;
             this.Grbx_AddContainer.Text = "Add Container";
@@ -201,7 +203,7 @@
             // Btn_ResetContainers
             // 
             this.Btn_ResetContainers.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_ResetContainers.Location = new System.Drawing.Point(12, 149);
+            this.Btn_ResetContainers.Location = new System.Drawing.Point(419, 151);
             this.Btn_ResetContainers.Name = "Btn_ResetContainers";
             this.Btn_ResetContainers.Size = new System.Drawing.Size(220, 30);
             this.Btn_ResetContainers.TabIndex = 32;
@@ -213,7 +215,7 @@
             // 
             this.Lbx_Containers.FormattingEnabled = true;
             this.Lbx_Containers.ItemHeight = 16;
-            this.Lbx_Containers.Location = new System.Drawing.Point(12, 27);
+            this.Lbx_Containers.Location = new System.Drawing.Point(419, 29);
             this.Lbx_Containers.Name = "Lbx_Containers";
             this.Lbx_Containers.Size = new System.Drawing.Size(220, 116);
             this.Lbx_Containers.TabIndex = 23;
@@ -221,7 +223,7 @@
             // Lbl_CargoShip
             // 
             this.Lbl_CargoShip.AutoSize = true;
-            this.Lbl_CargoShip.Location = new System.Drawing.Point(235, 7);
+            this.Lbl_CargoShip.Location = new System.Drawing.Point(12, 9);
             this.Lbl_CargoShip.Name = "Lbl_CargoShip";
             this.Lbl_CargoShip.Size = new System.Drawing.Size(74, 17);
             this.Lbl_CargoShip.TabIndex = 36;
@@ -234,7 +236,7 @@
             this.Grbx_AddCargoShip.Controls.Add(this.Lbl_CargoShipLength);
             this.Grbx_AddCargoShip.Controls.Add(this.Lbl_CargoShipWidth);
             this.Grbx_AddCargoShip.Controls.Add(this.Btn_AddCargoShip);
-            this.Grbx_AddCargoShip.Location = new System.Drawing.Point(238, 197);
+            this.Grbx_AddCargoShip.Location = new System.Drawing.Point(15, 199);
             this.Grbx_AddCargoShip.Name = "Grbx_AddCargoShip";
             this.Grbx_AddCargoShip.Size = new System.Drawing.Size(395, 166);
             this.Grbx_AddCargoShip.TabIndex = 34;
@@ -306,7 +308,7 @@
             // Btn_ResetCargoShip
             // 
             this.Btn_ResetCargoShip.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_ResetCargoShip.Location = new System.Drawing.Point(238, 149);
+            this.Btn_ResetCargoShip.Location = new System.Drawing.Point(15, 151);
             this.Btn_ResetCargoShip.Name = "Btn_ResetCargoShip";
             this.Btn_ResetCargoShip.Size = new System.Drawing.Size(395, 30);
             this.Btn_ResetCargoShip.TabIndex = 37;
@@ -318,7 +320,7 @@
             // 
             this.Lbx_CargoShips.FormattingEnabled = true;
             this.Lbx_CargoShips.ItemHeight = 16;
-            this.Lbx_CargoShips.Location = new System.Drawing.Point(238, 27);
+            this.Lbx_CargoShips.Location = new System.Drawing.Point(15, 29);
             this.Lbx_CargoShips.Name = "Lbx_CargoShips";
             this.Lbx_CargoShips.Size = new System.Drawing.Size(395, 116);
             this.Lbx_CargoShips.TabIndex = 33;
@@ -328,9 +330,9 @@
             // 
             this.Lbx_StackContainers.FormattingEnabled = true;
             this.Lbx_StackContainers.ItemHeight = 16;
-            this.Lbx_StackContainers.Location = new System.Drawing.Point(1046, 380);
+            this.Lbx_StackContainers.Location = new System.Drawing.Point(780, 380);
             this.Lbx_StackContainers.Name = "Lbx_StackContainers";
-            this.Lbx_StackContainers.Size = new System.Drawing.Size(356, 116);
+            this.Lbx_StackContainers.Size = new System.Drawing.Size(622, 116);
             this.Lbx_StackContainers.TabIndex = 38;
             // 
             // DGV_Stacks
@@ -352,9 +354,9 @@
             // 
             // Btn_AddContainerToStack
             // 
-            this.Btn_AddContainerToStack.Location = new System.Drawing.Point(546, 429);
+            this.Btn_AddContainerToStack.Location = new System.Drawing.Point(645, 29);
             this.Btn_AddContainerToStack.Name = "Btn_AddContainerToStack";
-            this.Btn_AddContainerToStack.Size = new System.Drawing.Size(186, 50);
+            this.Btn_AddContainerToStack.Size = new System.Drawing.Size(129, 116);
             this.Btn_AddContainerToStack.TabIndex = 13;
             this.Btn_AddContainerToStack.Text = "Add Selected Container To Stack";
             this.Btn_AddContainerToStack.UseVisualStyleBackColor = true;
@@ -362,9 +364,9 @@
             // 
             // Btn_AddRandomContainers
             // 
-            this.Btn_AddRandomContainers.Location = new System.Drawing.Point(81, 369);
+            this.Btn_AddRandomContainers.Location = new System.Drawing.Point(69, 153);
             this.Btn_AddRandomContainers.Name = "Btn_AddRandomContainers";
-            this.Btn_AddRandomContainers.Size = new System.Drawing.Size(151, 33);
+            this.Btn_AddRandomContainers.Size = new System.Drawing.Size(141, 33);
             this.Btn_AddRandomContainers.TabIndex = 11;
             this.Btn_AddRandomContainers.Text = "Random Containers";
             this.Btn_AddRandomContainers.UseVisualStyleBackColor = true;
@@ -372,7 +374,7 @@
             // 
             // Nud_RandomContainers
             // 
-            this.Nud_RandomContainers.Location = new System.Drawing.Point(18, 375);
+            this.Nud_RandomContainers.Location = new System.Drawing.Point(6, 159);
             this.Nud_RandomContainers.Minimum = new decimal(new int[] {
             1,
             0,
@@ -401,8 +403,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1414, 602);
-            this.Controls.Add(this.Nud_RandomContainers);
-            this.Controls.Add(this.Btn_AddRandomContainers);
             this.Controls.Add(this.Btn_AddContainerToStack);
             this.Controls.Add(this.DGV_Stacks);
             this.Controls.Add(this.Lbx_StackContainers);
