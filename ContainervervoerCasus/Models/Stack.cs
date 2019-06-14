@@ -89,6 +89,7 @@ namespace ContainervervoerCasus.Models
         public void AddContainer(Container container)
         {
             Containers.Add(container);
+            CalcStackWeight();
         }
 
         public override string ToString()

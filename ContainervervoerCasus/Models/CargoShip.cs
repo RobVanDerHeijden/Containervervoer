@@ -85,5 +85,25 @@ namespace ContainervervoerCasus.Models
         {
             return "[Stacks: " + Stacks.Count + "] Columns/Width: " + Width + " Rows/Length: " + Length;
         }
+
+        public int CalcWeightLeftSide()
+        {
+            WeightLeftSide = 0;
+            foreach (Stack stack in Stacks.Where(n => n.BalansPosition == BalansPosition.Left))
+            {
+                WeightLeftSide += stack.StackWeight;
+            }
+            return WeightLeftSide;
+        }
+
+        public int CalcWeightRightSide()
+        {
+            WeightRightSide = 0;
+            foreach (Stack stack in Stacks.Where(n => n.BalansPosition == BalansPosition.Right))
+            {
+                WeightRightSide += stack.StackWeight;
+            }
+            return WeightRightSide;
+        }
     }
 }

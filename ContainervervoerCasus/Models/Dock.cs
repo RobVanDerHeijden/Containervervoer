@@ -113,18 +113,36 @@ namespace ContainervervoerCasus.Models
 
             foreach (Container container in AllContainers)
             {
-                foreach (Stack stack in _cargoShip.Stacks)
-                {
+                //foreach (Stack stack in _cargoShip.Stacks)
+                //{
                     // CooledContainers
                     if (container.ContainerType == ContainerType.Cooled)
                     {
-                        if (stack.HasCooling) // if stack.isstackable 
+                        // TODO: move foreach into this if statement with a where clause, so foreach doesn't go through unnesescary stacks
+                        // TODO: if stack can fit:: if stack.weight <= sstackableweight
+                        foreach (Stack stack in _cargoShip.Stacks.Where(n => n.HasCooling))
                         {
-                            //if (stack.BalansPosition == //lighter one)
-                            //{
-                            //    // check avaulable staacks for lightest
-                            //}
-                            stack.AddContainer(container);
+                            if (stack.HasCooling && stack.IsStackable)
+                            {
+                                if (_cargoShip.WeightLeftSide <= _cargoShip.WeightRightSide)
+                                {
+                                    if (stack.BalansPosition == BalansPosition.Left)
+                                    {
+                                        stack.AddContainer(container);
+                                        _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                                        break;
+                                    }
+                                }
+                                else if (_cargoShip.WeightRightSide < _cargoShip.WeightLeftSide)
+                                {
+                                    if (stack.BalansPosition == BalansPosition.Right)
+                                    {
+                                        stack.AddContainer(container);
+                                        _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -139,7 +157,7 @@ namespace ContainervervoerCasus.Models
                     {
                         // if stack.isstackable of stack.hasvaluable = false
                     }
-                }
+                //} end foreach
                 
             }
         }

@@ -65,6 +65,10 @@ namespace ContainervervoerCasus
         private void Btn_ResetContainers_Click(object sender, EventArgs e)
         {
             _dock.AllContainers.Clear();
+            _dock.RegularContainers.Clear();
+            _dock.CooledContainers.Clear();
+            _dock.ValuableContainers.Clear();
+
             Lbx_Containers.Items.Clear();
             Models.Dock.TotalRegularContainers = 0;
             Models.Dock.TotalValuableContainers = 0;
@@ -126,7 +130,7 @@ namespace ContainervervoerCasus
                         Stack stock =_cargoShip.FindStackWithId(stackId);
                         stock.CalcStackWeight();
                         Lbl_StackWeight.Text = "Stack Weight: " + stock.StackWeight;
-                        dr[currentColumn] = stackId + ";=ID Cont:" + amountContainers + " Cool:" + stock.HasCooling;
+                        dr[currentColumn] = stackId + "; Cont:" + amountContainers + " Cool:" + stock.HasCooling;
                         counter++;
                     }
                     dt.Rows.Add(dr);
@@ -194,6 +198,11 @@ namespace ContainervervoerCasus
         {
             _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
             _dock.ActivateAlgorithm(_cargoShip);
+            Lbl_LeftSideWeight.Text = "Left Weight: " + _cargoShip.WeightLeftSide;
+            Lbl_MiddleSideWeight.Text = "Middle Weight: " + _cargoShip.WeightMiddleSide;
+            Lbl_RightSideWeight.Text = "Right Weight: " + _cargoShip.WeightRightSide;
+            Lbl_CargoShipCurrentWeight.Text = "Current Weight: " + _cargoShip.CurrentWeight;
+            Lbl_CargoShipMaxWeight.Text = "Max Weight: " + _cargoShip.MaximumCarryWeight;
         }
     }
 }
