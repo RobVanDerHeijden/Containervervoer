@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ContainervervoerCasus.Models
 {
@@ -81,15 +83,41 @@ namespace ContainervervoerCasus.Models
             if (Containers.Any())
             {
                 CalcStackWeight();
-                weightToSubstract = Container.MaximumCarryWeight - StackWeight;
+                int restContainerWeight = 0;
+                foreach (Container container in Containers.Where(n => n.ContainerID != 0))
+                {
+                    restContainerWeight += container.Weight;
+                }
+                StackableWeight = (MaxStackableWeight - Container.MaximumWeight) - restContainerWeight;
             }
-            StackableWeight = MaxStackableWeight - weightToSubstract;
+            //StackableWeight = MaxStackableWeight - weightToSubstract;
         }
 
         public void AddContainer(Container container)
         {
             Containers.Add(container);
             CalcStackWeight();
+            CalcStackableContainers();
+            CalcStackableWeight();
+            CheckIfStackIsStillStackable();
+        }
+
+        private void CheckIfStackIsStillStackable()
+        {
+            // TODO check if valuable is in stack
+            //var knownErrors = Enum.GetValues(typeof(ContainerType));
+            //return Containers.Intersect(knownErrors).Any();
+
+
+            if (StackableWeight > Container.MinimumWeight &&
+            StackableContainers > 0)
+            {
+                IsStackable = true;
+            }
+            else
+            {
+                IsStackable = false;
+            }
         }
 
         public override string ToString()

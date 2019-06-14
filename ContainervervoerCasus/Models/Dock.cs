@@ -113,51 +113,72 @@ namespace ContainervervoerCasus.Models
 
             foreach (Container container in AllContainers)
             {
-                //foreach (Stack stack in _cargoShip.Stacks)
-                //{
-                    // CooledContainers
-                    if (container.ContainerType == ContainerType.Cooled)
+                
+                // CooledContainers
+                if (container.ContainerType == ContainerType.Cooled)
+                {
+                    // TODO: if stack can fit:: if stack.weight <= sstackableweight
+                    foreach (Stack stack in _cargoShip.Stacks.Where(n => n.HasCooling))
                     {
-                        // TODO: move foreach into this if statement with a where clause, so foreach doesn't go through unnesescary stacks
-                        // TODO: if stack can fit:: if stack.weight <= sstackableweight
-                        foreach (Stack stack in _cargoShip.Stacks.Where(n => n.HasCooling))
+                        if (stack.IsStackable)
                         {
-                            if (stack.HasCooling && stack.IsStackable)
+                            if (_cargoShip.WeightLeftSide <= _cargoShip.WeightRightSide)
                             {
-                                if (_cargoShip.WeightLeftSide <= _cargoShip.WeightRightSide)
+                                if (stack.BalansPosition == BalansPosition.Left)
                                 {
-                                    if (stack.BalansPosition == BalansPosition.Left)
-                                    {
-                                        stack.AddContainer(container);
-                                        _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
-                                        break;
-                                    }
+                                    stack.AddContainer(container);
+                                    _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                                    break;
                                 }
-                                else if (_cargoShip.WeightRightSide < _cargoShip.WeightLeftSide)
+                            }
+                            else if (_cargoShip.WeightRightSide < _cargoShip.WeightLeftSide)
+                            {
+                                if (stack.BalansPosition == BalansPosition.Right)
                                 {
-                                    if (stack.BalansPosition == BalansPosition.Right)
-                                    {
-                                        stack.AddContainer(container);
-                                        _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
-                                        break;
-                                    }
+                                    stack.AddContainer(container);
+                                    _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
+                                    break;
                                 }
                             }
                         }
                     }
+                }
 
-                    // RegularContainers
-                    if (container.ContainerType == ContainerType.Regular)
+                // RegularContainers
+                if (container.ContainerType == ContainerType.Regular)
+                {
+                    // if stack.isstackable 
+                    foreach (Stack stack in _cargoShip.Stacks)
                     {
-                        // if stack.isstackable 
+                        if (stack.IsStackable)
+                        {
+                            if (_cargoShip.WeightLeftSide <= _cargoShip.WeightRightSide)
+                            {
+                                if (stack.BalansPosition == BalansPosition.Left)
+                                {
+                                    stack.AddContainer(container);
+                                    _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                                    break;
+                                }
+                            }
+                            else if (_cargoShip.WeightRightSide < _cargoShip.WeightLeftSide)
+                            {
+                                if (stack.BalansPosition == BalansPosition.Right)
+                                {
+                                    stack.AddContainer(container);
+                                    _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
+                                    break;
+                                }
+                            }
+                        }
                     }
+                }
 
-                    // RegularContainers
-                    if (container.ContainerType == ContainerType.Valuable)
-                    {
-                        // if stack.isstackable of stack.hasvaluable = false
-                    }
-                //} end foreach
+                // ValuableContainers
+                if (container.ContainerType == ContainerType.Valuable)
+                {
+                    // if stack.isstackable of stack.hasvaluable = false
+                }
                 
             }
         }
