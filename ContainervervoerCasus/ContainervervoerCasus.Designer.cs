@@ -58,6 +58,16 @@
             this.DGV_Stacks = new System.Windows.Forms.DataGridView();
             this.Btn_AddContainerToStack = new System.Windows.Forms.Button();
             this.Btn_SortContainers = new System.Windows.Forms.Button();
+            this.Btn_Algorithm = new System.Windows.Forms.Button();
+            this.Grbx_StackStats = new System.Windows.Forms.GroupBox();
+            this.Lbl_StackWeight = new System.Windows.Forms.Label();
+            this.Lbl_StackBalansPosition = new System.Windows.Forms.Label();
+            this.Grbx_CargoShipStats = new System.Windows.Forms.GroupBox();
+            this.Lbl_LeftSideWeight = new System.Windows.Forms.Label();
+            this.Lbl_MiddleSideWeight = new System.Windows.Forms.Label();
+            this.Lbl_RightSideWeight = new System.Windows.Forms.Label();
+            this.Lbl_CargoShipCurrentWeight = new System.Windows.Forms.Label();
+            this.Lbl_CargoShipMaxWeight = new System.Windows.Forms.Label();
             this.Grbx_ContainerStats.SuspendLayout();
             this.Grbx_AddContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).BeginInit();
@@ -66,6 +76,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Stacks)).BeginInit();
+            this.Grbx_StackStats.SuspendLayout();
+            this.Grbx_CargoShipStats.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_Containers
@@ -86,7 +98,7 @@
             this.Grbx_ContainerStats.Controls.Add(this.Lbl_TotalValuable);
             this.Grbx_ContainerStats.Location = new System.Drawing.Point(419, 399);
             this.Grbx_ContainerStats.Name = "Grbx_ContainerStats";
-            this.Grbx_ContainerStats.Size = new System.Drawing.Size(220, 118);
+            this.Grbx_ContainerStats.Size = new System.Drawing.Size(355, 118);
             this.Grbx_ContainerStats.TabIndex = 26;
             this.Grbx_ContainerStats.TabStop = false;
             this.Grbx_ContainerStats.Text = "Container Stats";
@@ -275,7 +287,7 @@
             this.Grbx_AddCargoShip.Controls.Add(this.Btn_AddCargoShip);
             this.Grbx_AddCargoShip.Location = new System.Drawing.Point(15, 199);
             this.Grbx_AddCargoShip.Name = "Grbx_AddCargoShip";
-            this.Grbx_AddCargoShip.Size = new System.Drawing.Size(395, 166);
+            this.Grbx_AddCargoShip.Size = new System.Drawing.Size(395, 194);
             this.Grbx_AddCargoShip.TabIndex = 34;
             this.Grbx_AddCargoShip.TabStop = false;
             this.Grbx_AddCargoShip.Text = "Add CargoShip";
@@ -367,9 +379,9 @@
             // 
             this.Lbx_StackContainers.FormattingEnabled = true;
             this.Lbx_StackContainers.ItemHeight = 16;
-            this.Lbx_StackContainers.Location = new System.Drawing.Point(780, 380);
+            this.Lbx_StackContainers.Location = new System.Drawing.Point(1100, 399);
             this.Lbx_StackContainers.Name = "Lbx_StackContainers";
-            this.Lbx_StackContainers.Size = new System.Drawing.Size(622, 116);
+            this.Lbx_StackContainers.Size = new System.Drawing.Size(302, 116);
             this.Lbx_StackContainers.TabIndex = 38;
             // 
             // DGV_Stacks
@@ -385,7 +397,7 @@
             this.DGV_Stacks.RowTemplate.Height = 24;
             this.DGV_Stacks.ShowCellToolTips = false;
             this.DGV_Stacks.ShowEditingIcon = false;
-            this.DGV_Stacks.Size = new System.Drawing.Size(622, 347);
+            this.DGV_Stacks.Size = new System.Drawing.Size(622, 366);
             this.DGV_Stacks.TabIndex = 39;
             this.DGV_Stacks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Stacks_CellContentClick);
             // 
@@ -401,7 +413,7 @@
             // 
             // Btn_SortContainers
             // 
-            this.Btn_SortContainers.Location = new System.Drawing.Point(645, 167);
+            this.Btn_SortContainers.Location = new System.Drawing.Point(645, 151);
             this.Btn_SortContainers.Name = "Btn_SortContainers";
             this.Btn_SortContainers.Size = new System.Drawing.Size(129, 116);
             this.Btn_SortContainers.TabIndex = 40;
@@ -409,15 +421,116 @@
             this.Btn_SortContainers.UseVisualStyleBackColor = true;
             this.Btn_SortContainers.Click += new System.EventHandler(this.Btn_SortContainers_Click);
             // 
+            // Btn_Algorithm
+            // 
+            this.Btn_Algorithm.Location = new System.Drawing.Point(645, 273);
+            this.Btn_Algorithm.Name = "Btn_Algorithm";
+            this.Btn_Algorithm.Size = new System.Drawing.Size(129, 116);
+            this.Btn_Algorithm.TabIndex = 41;
+            this.Btn_Algorithm.Text = "Algorithm";
+            this.Btn_Algorithm.UseVisualStyleBackColor = true;
+            this.Btn_Algorithm.Click += new System.EventHandler(this.Btn_Algorithm_Click);
+            // 
+            // Grbx_StackStats
+            // 
+            this.Grbx_StackStats.Controls.Add(this.Lbl_StackWeight);
+            this.Grbx_StackStats.Controls.Add(this.Lbl_StackBalansPosition);
+            this.Grbx_StackStats.Location = new System.Drawing.Point(780, 399);
+            this.Grbx_StackStats.Name = "Grbx_StackStats";
+            this.Grbx_StackStats.Size = new System.Drawing.Size(314, 118);
+            this.Grbx_StackStats.TabIndex = 27;
+            this.Grbx_StackStats.TabStop = false;
+            this.Grbx_StackStats.Text = "Stack Stats";
+            // 
+            // Lbl_StackWeight
+            // 
+            this.Lbl_StackWeight.AutoSize = true;
+            this.Lbl_StackWeight.Location = new System.Drawing.Point(3, 18);
+            this.Lbl_StackWeight.Name = "Lbl_StackWeight";
+            this.Lbl_StackWeight.Size = new System.Drawing.Size(107, 17);
+            this.Lbl_StackWeight.TabIndex = 10;
+            this.Lbl_StackWeight.Text = "Stack Weight: 0";
+            // 
+            // Lbl_StackBalansPosition
+            // 
+            this.Lbl_StackBalansPosition.AutoSize = true;
+            this.Lbl_StackBalansPosition.Location = new System.Drawing.Point(3, 35);
+            this.Lbl_StackBalansPosition.Name = "Lbl_StackBalansPosition";
+            this.Lbl_StackBalansPosition.Size = new System.Drawing.Size(52, 17);
+            this.Lbl_StackBalansPosition.TabIndex = 12;
+            this.Lbl_StackBalansPosition.Text = "Side: 0";
+            // 
+            // Grbx_CargoShipStats
+            // 
+            this.Grbx_CargoShipStats.Controls.Add(this.Lbl_CargoShipMaxWeight);
+            this.Grbx_CargoShipStats.Controls.Add(this.Lbl_CargoShipCurrentWeight);
+            this.Grbx_CargoShipStats.Controls.Add(this.Lbl_RightSideWeight);
+            this.Grbx_CargoShipStats.Controls.Add(this.Lbl_LeftSideWeight);
+            this.Grbx_CargoShipStats.Controls.Add(this.Lbl_MiddleSideWeight);
+            this.Grbx_CargoShipStats.Location = new System.Drawing.Point(15, 399);
+            this.Grbx_CargoShipStats.Name = "Grbx_CargoShipStats";
+            this.Grbx_CargoShipStats.Size = new System.Drawing.Size(402, 118);
+            this.Grbx_CargoShipStats.TabIndex = 28;
+            this.Grbx_CargoShipStats.TabStop = false;
+            this.Grbx_CargoShipStats.Text = "CargoShip Stats";
+            // 
+            // Lbl_LeftSideWeight
+            // 
+            this.Lbl_LeftSideWeight.AutoSize = true;
+            this.Lbl_LeftSideWeight.Location = new System.Drawing.Point(3, 18);
+            this.Lbl_LeftSideWeight.Name = "Lbl_LeftSideWeight";
+            this.Lbl_LeftSideWeight.Size = new System.Drawing.Size(96, 17);
+            this.Lbl_LeftSideWeight.TabIndex = 10;
+            this.Lbl_LeftSideWeight.Text = "Left Weight: 0";
+            // 
+            // Lbl_MiddleSideWeight
+            // 
+            this.Lbl_MiddleSideWeight.AutoSize = true;
+            this.Lbl_MiddleSideWeight.Location = new System.Drawing.Point(124, 18);
+            this.Lbl_MiddleSideWeight.Name = "Lbl_MiddleSideWeight";
+            this.Lbl_MiddleSideWeight.Size = new System.Drawing.Size(113, 17);
+            this.Lbl_MiddleSideWeight.TabIndex = 12;
+            this.Lbl_MiddleSideWeight.Text = "Middle Weight: 0";
+            // 
+            // Lbl_RightSideWeight
+            // 
+            this.Lbl_RightSideWeight.AutoSize = true;
+            this.Lbl_RightSideWeight.Location = new System.Drawing.Point(255, 18);
+            this.Lbl_RightSideWeight.Name = "Lbl_RightSideWeight";
+            this.Lbl_RightSideWeight.Size = new System.Drawing.Size(105, 17);
+            this.Lbl_RightSideWeight.TabIndex = 13;
+            this.Lbl_RightSideWeight.Text = "Right Weight: 0";
+            // 
+            // Lbl_CargoShipCurrentWeight
+            // 
+            this.Lbl_CargoShipCurrentWeight.AutoSize = true;
+            this.Lbl_CargoShipCurrentWeight.Location = new System.Drawing.Point(38, 52);
+            this.Lbl_CargoShipCurrentWeight.Name = "Lbl_CargoShipCurrentWeight";
+            this.Lbl_CargoShipCurrentWeight.Size = new System.Drawing.Size(119, 17);
+            this.Lbl_CargoShipCurrentWeight.TabIndex = 14;
+            this.Lbl_CargoShipCurrentWeight.Text = "Current Weight: 0";
+            // 
+            // Lbl_CargoShipMaxWeight
+            // 
+            this.Lbl_CargoShipMaxWeight.AutoSize = true;
+            this.Lbl_CargoShipMaxWeight.Location = new System.Drawing.Point(189, 52);
+            this.Lbl_CargoShipMaxWeight.Name = "Lbl_CargoShipMaxWeight";
+            this.Lbl_CargoShipMaxWeight.Size = new System.Drawing.Size(97, 17);
+            this.Lbl_CargoShipMaxWeight.TabIndex = 15;
+            this.Lbl_CargoShipMaxWeight.Text = "Max Weight: 0";
+            // 
             // ContainervervoerCasus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1414, 602);
+            this.Controls.Add(this.Grbx_CargoShipStats);
+            this.Controls.Add(this.Grbx_StackStats);
+            this.Controls.Add(this.Lbx_StackContainers);
+            this.Controls.Add(this.Btn_Algorithm);
             this.Controls.Add(this.Btn_SortContainers);
             this.Controls.Add(this.Btn_AddContainerToStack);
             this.Controls.Add(this.DGV_Stacks);
-            this.Controls.Add(this.Lbx_StackContainers);
             this.Controls.Add(this.Lbl_CargoShip);
             this.Controls.Add(this.Grbx_AddCargoShip);
             this.Controls.Add(this.Btn_ResetCargoShip);
@@ -441,6 +554,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_CargoShipWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Stacks)).EndInit();
+            this.Grbx_StackStats.ResumeLayout(false);
+            this.Grbx_StackStats.PerformLayout();
+            this.Grbx_CargoShipStats.ResumeLayout(false);
+            this.Grbx_CargoShipStats.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,6 +594,16 @@
         private System.Windows.Forms.NumericUpDown Nud_RandomContainers;
         private System.Windows.Forms.Label Lbl_TotalContainers;
         private System.Windows.Forms.Button Btn_SortContainers;
+        private System.Windows.Forms.Button Btn_Algorithm;
+        private System.Windows.Forms.GroupBox Grbx_StackStats;
+        private System.Windows.Forms.Label Lbl_StackWeight;
+        private System.Windows.Forms.Label Lbl_StackBalansPosition;
+        private System.Windows.Forms.GroupBox Grbx_CargoShipStats;
+        private System.Windows.Forms.Label Lbl_LeftSideWeight;
+        private System.Windows.Forms.Label Lbl_MiddleSideWeight;
+        private System.Windows.Forms.Label Lbl_RightSideWeight;
+        private System.Windows.Forms.Label Lbl_CargoShipMaxWeight;
+        private System.Windows.Forms.Label Lbl_CargoShipCurrentWeight;
     }
 }
 

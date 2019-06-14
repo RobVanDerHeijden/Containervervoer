@@ -101,5 +101,11 @@ namespace ContainervervoerCasus.Models
             AllContainers.AddRange(regulars);
             AllContainers.AddRange(valuables);
         }
+
+
+        public void ActivateAlgorithm()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

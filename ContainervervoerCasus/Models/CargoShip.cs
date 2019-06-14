@@ -15,7 +15,7 @@ namespace ContainervervoerCasus.Models
         public int WeightMiddleSide { get; set; }
         public int CurrentWeight { get; set; }
         public int MaximumCarryWeight { get; set; }
-        public int IsCarying { get; set; }
+        //public int IsCarying { get; set; }
         public int Width { get; set; } //columns
         public int Length { get; set; } //rows
         // maxgekoeld??
@@ -68,6 +68,11 @@ namespace ContainervervoerCasus.Models
         public void AddWeightLeftSide(int weight)
         {
             WeightLeftSide += weight;
+            CurrentWeight += weight;
+        }
+        public void AddWeightMiddleSide(int weight)
+        {
+            WeightMiddleSide += weight;
             CurrentWeight += weight;
         }
         public void AddWeightRightSide(int weight)
