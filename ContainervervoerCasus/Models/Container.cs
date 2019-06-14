@@ -8,7 +8,7 @@
         public int Weight { get; set; }
         public static int MinimumWeight = 4;
         public static int MaximumWeight = 30;
-        public int MaximumCarryWeight { get; set; }
+        public static int MaximumCarryWeight = 120;
         public int IsCarying { get; set; }
         public ContainerType ContainerType { get; set; }
         
@@ -23,7 +23,7 @@
         {
             ContainerID = ContainerIncrement;
             Weight = weight;
-            MaximumCarryWeight = 30;
+            MaximumCarryWeight = 120;
             IsCarying = 0;
             ContainerType = containerType;
             

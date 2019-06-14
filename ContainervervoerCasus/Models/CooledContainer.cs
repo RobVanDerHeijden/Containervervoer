@@ -6,7 +6,7 @@
         {
             Weight = weight;
             ContainerType = containerType;
-            MaximumCarryWeight = 30;
+            MaximumCarryWeight = 120;
             IsCarying = 0;
 
             Dock.TotalWeightContainers += weight;

@@ -103,9 +103,45 @@ namespace ContainervervoerCasus.Models
         }
 
 
-        public void ActivateAlgorithm()
+        public void ActivateAlgorithm(CargoShip _cargoShip)
         {
-            throw new NotImplementedException();
+            // foreach container in AllContainers
+            // if containertype = Cooled
+            // if stack hascooling = true
+            // Then check if left or right is lighter or =. put container in lighter side (start Left side)
+            // (ignore middle side for now)
+
+            foreach (Container container in AllContainers)
+            {
+                foreach (Stack stack in _cargoShip.Stacks)
+                {
+                    // CooledContainers
+                    if (container.ContainerType == ContainerType.Cooled)
+                    {
+                        if (stack.HasCooling) // if stack.isstackable 
+                        {
+                            //if (stack.BalansPosition == //lighter one)
+                            //{
+                            //    // check avaulable staacks for lightest
+                            //}
+                            stack.AddContainer(container);
+                        }
+                    }
+
+                    // RegularContainers
+                    if (container.ContainerType == ContainerType.Regular)
+                    {
+                        // if stack.isstackable 
+                    }
+
+                    // RegularContainers
+                    if (container.ContainerType == ContainerType.Valuable)
+                    {
+                        // if stack.isstackable of stack.hasvaluable = false
+                    }
+                }
+                
+            }
         }
     }
 }

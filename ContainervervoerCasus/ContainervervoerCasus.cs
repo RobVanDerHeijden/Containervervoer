@@ -123,7 +123,10 @@ namespace ContainervervoerCasus
                         }
                         int stackId = _cargoShip.Stacks[counter].StackID;
 
-                        dr[currentColumn] = stackId + ";=ID | Cont[" + amountContainers + "]";
+                        Stack stock =_cargoShip.FindStackWithId(stackId);
+                        stock.CalcStackWeight();
+                        Lbl_StackWeight.Text = "Stack Weight: " + stock.StackWeight;
+                        dr[currentColumn] = stackId + ";=ID Cont:" + amountContainers + " Cool:" + stock.HasCooling;
                         counter++;
                     }
                     dt.Rows.Add(dr);
@@ -140,6 +143,9 @@ namespace ContainervervoerCasus
             {
                 Lbx_StackContainers.Items.Add(conto);
             }
+
+            stacko.CalcStackWeight();
+            Lbl_StackWeight.Text = "Stack Weight: " + stacko.StackWeight;
         }
 
         private void Btn_AddContainerToStack_Click(object sender, EventArgs e)
@@ -186,34 +192,8 @@ namespace ContainervervoerCasus
 
         private void Btn_Algorithm_Click(object sender, EventArgs e)
         {
-            _dock.ActivateAlgorithm();
-
-            // foreach container in AllContainers
-            // if type = Cooled
-            // insert into first row
-            // start Left side
-            // Then check if left or right is lighter. put container in lighter side
-            // (ignore middle side for now)
-
-
-
-
-            Lbx_StackContainers.Items.Clear();
-
-            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
-
             _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
-            Stack selectedStack = _cargoShip.FindStackWithId(stackId);
-            Container selectedContainer = Lbx_Containers.SelectedItem as Container;
-
-            selectedStack.AddContainer(selectedContainer);
-            foreach (var conto in selectedStack.Containers)
-            {
-                Lbx_StackContainers.Items.Add(conto);
-            }
-
-            _dock.AllContainers.Remove(Lbx_Containers.SelectedItems[0] as Container);
-            Lbx_Containers.Items.Remove(Lbx_Containers.SelectedItems[0]);
+            _dock.ActivateAlgorithm(_cargoShip);
         }
     }
 }
