@@ -105,7 +105,6 @@ namespace ContainervervoerCasus.Models
                 }
                 StackableWeight = (MaxStackableWeight - Container.MaximumWeight) - restContainerWeight;
             }
-            //StackableWeight = MaxStackableWeight - weightToSubstract;
         }
 
         public void AddContainer(Container container)
@@ -133,9 +132,6 @@ namespace ContainervervoerCasus.Models
 
         private void CheckIfStackIsStillStackableForNonValuable()
         {
-            // TODO: check if valuable is in stack
-            //var knownErrors = Enum.GetValues(typeof(ContainerType));
-            //return Containers.Intersect(knownErrors).Any();
             if (StackableWeight-Container.MaximumWeight > Container.MinimumWeight &&
             StackableContainers > 0)
             {

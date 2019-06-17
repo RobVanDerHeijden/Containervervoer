@@ -84,6 +84,9 @@ namespace ContainervervoerCasus
             CargoShip cargoShip = new CargoShip((int) Nud_CargoShipWidth.Value, (int) Nud_CargoShipLength.Value);
             _dock.CargoShips.Add(cargoShip);
             Lbx_CargoShips.Items.Add(cargoShip);
+            RefreshListsCargoShip();
+            Lbx_CargoShips.SetSelected(Lbx_CargoShips.Items.Count-1, true);
+            ShowStackInfo();
         }
 
         private void Btn_ResetCargoShip_Click(object sender, EventArgs e)
@@ -145,6 +148,11 @@ namespace ContainervervoerCasus
 
         private void DGV_Stacks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            ShowStackInfo();
+        }
+
+        private void ShowStackInfo()
+        {
             Lbx_StackContainers.Items.Clear();
             int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
             Stack stacko = _cargoShip.FindStackWithId(stackId);
@@ -159,21 +167,30 @@ namespace ContainervervoerCasus
 
         private void Btn_AddContainerToStack_Click(object sender, EventArgs e)
         {
-            Lbx_StackContainers.Items.Clear();
-            int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
-            
-            _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
-            Stack selectedStack = _cargoShip.FindStackWithId(stackId);
-            Container selectedContainer = Lbx_Containers.SelectedItem as Container;
-
-            selectedStack.AddContainer(selectedContainer);
-            foreach (var conto in selectedStack.Containers)
+            if (Lbx_CargoShips.SelectedIndex != -1 && Lbx_Containers.SelectedIndex != -1)
             {
-                Lbx_StackContainers.Items.Add(conto);
-            }
+                Lbx_StackContainers.Items.Clear();
+                int stackId = Convert.ToInt32(DGV_Stacks.CurrentCell.Value.ToString().Split(';')[0]);
 
-            _dock.AllContainers.Remove(Lbx_Containers.SelectedItems[0] as Container);
-            Lbx_Containers.Items.Remove(Lbx_Containers.SelectedItems[0]);
+                _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+                Stack selectedStack = _cargoShip.FindStackWithId(stackId);
+                Container selectedContainer = Lbx_Containers.SelectedItem as Container;
+
+                selectedStack.AddContainer(selectedContainer);
+                foreach (var conto in selectedStack.Containers)
+                {
+                    Lbx_StackContainers.Items.Add(conto);
+                }
+
+                _dock.AllContainers.Remove(Lbx_Containers.SelectedItems[0] as Container);
+                Lbx_Containers.Items.Remove(Lbx_Containers.SelectedItems[0]);
+                RefreshListsCargoShip();
+                ShowStackInfo();
+            }
+            else
+            {
+                MessageBox.Show("Select a CargoShip and a Container!");
+            }
         }
 
         private void Btn_AddRandomContainers_Click(object sender, EventArgs e)
@@ -223,6 +240,7 @@ namespace ContainervervoerCasus
 
             RefreshListsCargoShip();
             RefreshAllContainers();
+            ShowStackInfo();
         }
     }
 }
