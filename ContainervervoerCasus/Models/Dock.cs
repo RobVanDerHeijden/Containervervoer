@@ -9,7 +9,6 @@ namespace ContainervervoerCasus.Models
     public class Dock
     {
         // Fields
-        public int DockID { get; set; } // Probally unnecessary 
         public List<CargoShip> CargoShips = new List<CargoShip>();
         public List<Container> AllContainers = new List<Container>();
 
@@ -27,11 +26,6 @@ namespace ContainervervoerCasus.Models
         public Dock()
         {
 
-        }
-
-        public void AddContainer(Container container)
-        {
-            AllContainers.Add(container);
         }
 
         public void AddRandomContainers(int amountContainers)
@@ -86,10 +80,10 @@ namespace ContainervervoerCasus.Models
             var sortedCooledContainers = CooledContainers.OrderByDescending(Container => Container.Weight);
             var sortedRegularContainers = RegularContainers.OrderByDescending(Container => Container.Weight);
             var sortedValuableContainers = ValuableContainers.OrderByDescending(Container => Container.Weight);
-            VoegAlleDierenSamenInEenLijst(sortedCooledContainers, sortedRegularContainers, sortedValuableContainers);
+            CombineSplittedLists(sortedCooledContainers, sortedRegularContainers, sortedValuableContainers);
         }
 
-        public void VoegAlleDierenSamenInEenLijst(IOrderedEnumerable<Container> coolios, IOrderedEnumerable<Container> regulars, IOrderedEnumerable<Container> valuables)
+        public void CombineSplittedLists(IOrderedEnumerable<Container> coolios, IOrderedEnumerable<Container> regulars, IOrderedEnumerable<Container> valuables)
         {
             AllContainers.Clear();
             AllContainers.AddRange(coolios);
@@ -98,52 +92,18 @@ namespace ContainervervoerCasus.Models
         }
 
 
-        public void ActivateAlgorithm(CargoShip _cargoShip)
+        public void ActivateAlgorithm(CargoShip cargoShip)
         {
-            //MessageBox.Show("Container count before: " + AllContainers.Count());
-
-            // foreach container in AllContainers
-            // if containertype = Cooled
-            // if stack hascooling = true
-            // Then check if left or right is lighter or =. put container in lighter side (start Left side)
-            // (ignore middle side for now)
-
-            // valuable possible locations = V
-            /* -    column1 column2 column3 column4
-             * row1 V   V   V   V   V   V   V   
-             * row2 V   V   V   V   V   V   V
-             * row3 x   x   x   x   x   x   x
-             * row4 V   V   V   V   V   V   V
-             * row5 V   V   V   V   V   V   V
-             * row6 x   x   x   x   x   x   x
-             */
-
-            List<Stack> leftSideStacks = new List<Stack>();
-            List<Stack> rightSideStacks = new List<Stack>();
-            List<Stack> middleSideStacks = new List<Stack>();
-            foreach (Stack stack in _cargoShip.Stacks)
-            {
-                if (stack.BalansPosition == BalansPosition.Left)
-                {
-                    leftSideStacks.Add(stack);
-                }
-                else if (stack.BalansPosition == BalansPosition.Right)
-                {
-                    rightSideStacks.Add(stack);
-                }
-                else if (stack.BalansPosition == BalansPosition.Middle)
-                {
-                    middleSideStacks.Add(stack);
-                }
-            }
+            IEnumerable<Stack> leftSideStacks = cargoShip.Stacks.Where(e => e.BalansPosition == BalansPosition.Left);
+            IEnumerable<Stack> rightSideStacks = cargoShip.Stacks.Where(e => e.BalansPosition == BalansPosition.Right);
+            IEnumerable<Stack> middleSideStacks = cargoShip.Stacks.Where(e => e.BalansPosition == BalansPosition.Middle);
             
             // First itteration: Left + Right
             foreach (Container container in AllContainers.ToList())
             {
                 bool hasBeenProcessed = false;
 
-                if (_cargoShip.WeightLeftSide <= _cargoShip.WeightRightSide 
-                    && !hasBeenProcessed)
+                if (cargoShip.WeightLeftSide <= cargoShip.WeightRightSide)
                 {
                     foreach (Stack lStack in leftSideStacks)
                     {
@@ -152,9 +112,9 @@ namespace ContainervervoerCasus.Models
                             && lStack.IsStackableForNonValuable 
                             && lStack.HasCooling)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                             correctStack.AddContainer(container);
-                            _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                            cargoShip.WeightLeftSide = cargoShip.CalcWeightLeftSide();
                             hasBeenProcessed = true;
                             AllContainers.Remove(container);
                             break;
@@ -163,9 +123,9 @@ namespace ContainervervoerCasus.Models
                         if (container.ContainerType == ContainerType.Regular 
                             && lStack.IsStackableForNonValuable)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                             correctStack.AddContainer(container);
-                            _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                            cargoShip.WeightLeftSide = cargoShip.CalcWeightLeftSide();
                             hasBeenProcessed = true;
                             AllContainers.Remove(container);
                             break;
@@ -175,10 +135,10 @@ namespace ContainervervoerCasus.Models
                             && lStack.IsStackableForValuable 
                             && (lStack.Row + 1) % 3 != 0)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                             correctStack.AddContainer(container);
                             correctStack.IsStackableForValuable = false;
-                            _cargoShip.WeightLeftSide = _cargoShip.CalcWeightLeftSide();
+                            cargoShip.WeightLeftSide = cargoShip.CalcWeightLeftSide();
                             hasBeenProcessed = true;
                             AllContainers.Remove(container);
                             break;
@@ -186,7 +146,7 @@ namespace ContainervervoerCasus.Models
                     } // END foreach Left Stack
                 } // END If Left is lighter
 
-                if (_cargoShip.WeightRightSide < _cargoShip.WeightLeftSide 
+                if (cargoShip.WeightRightSide < cargoShip.WeightLeftSide 
                     && !hasBeenProcessed)
                 {
                     foreach (Stack rStack in rightSideStacks)
@@ -196,10 +156,9 @@ namespace ContainervervoerCasus.Models
                             && rStack.IsStackableForNonValuable 
                             && rStack.HasCooling)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(rStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(rStack.StackID);
                             correctStack.AddContainer(container);
-                            _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
-                            hasBeenProcessed = true;
+                            cargoShip.WeightRightSide = cargoShip.CalcWeightRightSide();
                             AllContainers.Remove(container);
                             break;
                         }
@@ -207,10 +166,9 @@ namespace ContainervervoerCasus.Models
                         if (container.ContainerType == ContainerType.Regular 
                             && rStack.IsStackableForNonValuable)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(rStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(rStack.StackID);
                             correctStack.AddContainer(container);
-                            _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
-                            hasBeenProcessed = true;
+                            cargoShip.WeightRightSide = cargoShip.CalcWeightRightSide();
                             AllContainers.Remove(container);
                             break;
                         }
@@ -219,11 +177,10 @@ namespace ContainervervoerCasus.Models
                             && rStack.IsStackableForValuable 
                             && (rStack.Row + 1) % 3 != 0)
                         {
-                            Stack correctStack = _cargoShip.FindStackWithId(rStack.StackID);
+                            Stack correctStack = cargoShip.FindStackWithId(rStack.StackID);
                             correctStack.AddContainer(container);
                             correctStack.IsStackableForValuable = false;
-                            _cargoShip.WeightRightSide = _cargoShip.CalcWeightRightSide();
-                            hasBeenProcessed = true;
+                            cargoShip.WeightRightSide = cargoShip.CalcWeightRightSide();
                             AllContainers.Remove(container);
                             break;
                         }
@@ -241,9 +198,9 @@ namespace ContainervervoerCasus.Models
                         && lStack.IsStackableForNonValuable
                         && lStack.HasCooling)
                     {
-                        Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                         correctStack.AddContainer(container);
-                        _cargoShip.WeightMiddleSide = _cargoShip.CalcWeightMiddleSide();
+                        cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();
                         AllContainers.Remove(container);
                         break;
                     }
@@ -251,9 +208,9 @@ namespace ContainervervoerCasus.Models
                     if (container.ContainerType == ContainerType.Regular
                         && lStack.IsStackableForNonValuable)
                     {
-                        Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                         correctStack.AddContainer(container);
-                        _cargoShip.WeightMiddleSide = _cargoShip.CalcWeightMiddleSide();
+                        cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();
                         AllContainers.Remove(container);
                         break;
                     }
@@ -262,19 +219,17 @@ namespace ContainervervoerCasus.Models
                         && lStack.IsStackableForValuable
                         && (lStack.Row + 1) % 3 != 0)
                     {
-                        Stack correctStack = _cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                         correctStack.AddContainer(container);
                         correctStack.IsStackableForValuable = false;
-                        _cargoShip.WeightMiddleSide = _cargoShip.CalcWeightMiddleSide();
+                        cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();
                         AllContainers.Remove(container);
                         break;
                     }
                 } // END foreach Left Stack
             } // END foreach Container
-
-
-            //MessageBox.Show("Container count after: " + AllContainers.Count());
-            _cargoShip.CalcCurrentWeight();
+            
+            cargoShip.CalcCurrentWeight();
         }
     }
 }

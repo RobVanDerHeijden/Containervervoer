@@ -13,7 +13,7 @@ namespace ContainervervoerCasus
     public partial class ContainervervoerCasus : Form
     {
         // Fields + objecten aanmaken
-        Dock _dock = new Dock();
+        private readonly Dock _dock = new Dock();
         CargoShip _cargoShip;
 
         public ContainervervoerCasus()
@@ -29,19 +29,19 @@ namespace ContainervervoerCasus
             if (status == ContainerType.Regular)
             {
                 Container newContainer = new Container(weight, status);
-                _dock.AddContainer(newContainer);
+                _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Valuable)
             {
                 ValuableContainer newContainer = new ValuableContainer(weight, status);
-                _dock.AddContainer(newContainer);
+                _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Cooled)
             {
                 CooledContainer newContainer = new CooledContainer(weight, status);
-                _dock.AddContainer(newContainer);
+                _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
 
@@ -184,6 +184,7 @@ namespace ContainervervoerCasus
 
                 _dock.AllContainers.Remove(Lbx_Containers.SelectedItems[0] as Container);
                 Lbx_Containers.Items.Remove(Lbx_Containers.SelectedItems[0]);
+                UpdateCargoShipStats();
                 RefreshListsCargoShip();
                 ShowStackInfo();
             }
@@ -204,6 +205,7 @@ namespace ContainervervoerCasus
                 Lbx_Containers.Items.Add(newContainer);
             }
             UpdateContainerStats();
+            CalcProcentWeightFilled();
         }
 
         private void Btn_SortContainers_Click(object sender, EventArgs e)
@@ -223,24 +225,50 @@ namespace ContainervervoerCasus
 
         private void Btn_Algorithm_Click(object sender, EventArgs e)
         {
-            if (Lbx_CargoShips.SelectedIndex != -1)
+            double totalWeightContainers = _dock.AllContainers.Sum(item => item.Weight);
+            if (totalWeightContainers >= (_cargoShip.MaximumCarryWeight / 2))
             {
-                _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
-                _dock.ActivateAlgorithm(_cargoShip);
-                Lbl_LeftSideWeight.Text = "Left Weight: " + _cargoShip.WeightLeftSide;
-                Lbl_MiddleSideWeight.Text = "Middle Weight: " + _cargoShip.WeightMiddleSide;
-                Lbl_RightSideWeight.Text = "Right Weight: " + _cargoShip.WeightRightSide;
-                Lbl_CargoShipCurrentWeight.Text = "Current Weight: " + _cargoShip.CurrentWeight;
-                Lbl_CargoShipMaxWeight.Text = "Max Weight: " + _cargoShip.MaximumCarryWeight;
+                //MessageBox.Show("Tot: " + totalWeightContainers + " Max: " + _cargoShip.MaximumCarryWeight / 2);
+                if (Lbx_CargoShips.SelectedIndex != -1)
+                {
+                    _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+                    _dock.ActivateAlgorithm(_cargoShip);
+
+                    UpdateCargoShipStats();
+                    CalcProcentWeightFilled();
+                    RefreshListsCargoShip();
+                    RefreshAllContainers();
+                    ShowStackInfo();
+                }
+                else
+                {
+                    MessageBox.Show("Select a CargoShip!");
+                }
             }
             else
             {
-                MessageBox.Show("Select a CargoShip!");
+                MessageBox.Show("Not Enough weight in Containers, or CargoShip to Big for the load!" + Environment.NewLine +
+                                "Total weight Containers: " + totalWeightContainers + " Needed: " + _cargoShip.MaximumCarryWeight / 2 );
             }
 
-            RefreshListsCargoShip();
-            RefreshAllContainers();
-            ShowStackInfo();
+        }
+
+        private void UpdateCargoShipStats()
+        {
+            Lbl_LeftSideWeight.Text = "Left Weight: " + _cargoShip.WeightLeftSide;
+            Lbl_MiddleSideWeight.Text = "Middle Weight: " + _cargoShip.WeightMiddleSide;
+            Lbl_RightSideWeight.Text = "Right Weight: " + _cargoShip.WeightRightSide;
+            Lbl_CargoShipCurrentWeight.Text = "Current Weight: " + _cargoShip.CurrentWeight;
+            Lbl_CargoShipMaxWeight.Text = "Max Weight: " + _cargoShip.MaximumCarryWeight;
+        }
+
+        private void CalcProcentWeightFilled()
+        {
+            decimal curWeight = _cargoShip.CurrentWeight;
+            decimal maxWeight = _cargoShip.MaximumCarryWeight;
+            decimal procentWeightFilled = curWeight / maxWeight * 100;
+            int percentFilled = (int) Math.Floor(procentWeightFilled);
+            Pbr_WeightDistribution.Value = percentFilled;
         }
     }
 }
