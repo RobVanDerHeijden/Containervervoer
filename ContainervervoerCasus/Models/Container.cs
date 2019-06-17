@@ -19,18 +19,15 @@
             ContainerIncrement++;
         }
 
-        public Container(int weight, ContainerType containerType)
+        public Container(int weight)
         {
             ContainerID = ContainerIncrement;
             Weight = weight;
-            MaximumCarryWeight = 120;
             IsCarying = 0;
-            ContainerType = containerType;
+            ContainerType = ContainerType.Regular;
             
-            if (containerType == ContainerType.Regular)
-            {
-                Dock.TotalRegularContainers++;
-            }
+            
+            Dock.TotalRegularContainers++;
             Dock.TotalWeightContainers += weight;
             Dock.TotalContainers++;
             

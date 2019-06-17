@@ -39,17 +39,17 @@ namespace ContainervervoerCasus.Models
 
                 if (type == ContainerType.Regular)
                 {
-                    Container newContainer = new Container(randomWeight, type);
+                    Container newContainer = new Container(randomWeight);
                     AllContainers.Add(newContainer);
                 }
                 else if (type == ContainerType.Valuable)
                 {
-                    ValuableContainer newContainer = new ValuableContainer(randomWeight, type);
+                    ValuableContainer newContainer = new ValuableContainer(randomWeight);
                     AllContainers.Add(newContainer);
                 }
                 else if (type == ContainerType.Cooled)
                 {
-                    CooledContainer newContainer = new CooledContainer(randomWeight, type);
+                    CooledContainer newContainer = new CooledContainer(randomWeight);
                     AllContainers.Add(newContainer);
                 }
             }
@@ -133,7 +133,7 @@ namespace ContainervervoerCasus.Models
                         // ValuableContainers
                         if (container.ContainerType == ContainerType.Valuable 
                             && lStack.IsStackableForValuable 
-                            && (lStack.Row + 1) % 3 != 0)
+                            && lStack.IsStackInAValuableRow)
                         {
                             Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
                             correctStack.AddContainer(container);
@@ -175,7 +175,7 @@ namespace ContainervervoerCasus.Models
                         // ValuableContainers
                         if (container.ContainerType == ContainerType.Valuable 
                             && rStack.IsStackableForValuable 
-                            && (rStack.Row + 1) % 3 != 0)
+                            && rStack.IsStackInAValuableRow)
                         {
                             Stack correctStack = cargoShip.FindStackWithId(rStack.StackID);
                             correctStack.AddContainer(container);
@@ -188,17 +188,17 @@ namespace ContainervervoerCasus.Models
                 } // END If Right is lighter
             } // END foreach Container
 
-            // Second itteration: Middle
+            // Second itteration: MIDDLE
             foreach (Container container in AllContainers.ToList())
             {
-                foreach (Stack lStack in middleSideStacks)
+                foreach (Stack mStack in middleSideStacks)
                 {
                     // CooledContainers
                     if (container.ContainerType == ContainerType.Cooled
-                        && lStack.IsStackableForNonValuable
-                        && lStack.HasCooling)
+                        && mStack.IsStackableForNonValuable
+                        && mStack.HasCooling)
                     {
-                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(mStack.StackID);
                         correctStack.AddContainer(container);
                         cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();
                         AllContainers.Remove(container);
@@ -206,9 +206,9 @@ namespace ContainervervoerCasus.Models
                     }
                     // RegularContainers
                     if (container.ContainerType == ContainerType.Regular
-                        && lStack.IsStackableForNonValuable)
+                        && mStack.IsStackableForNonValuable)
                     {
-                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(mStack.StackID);
                         correctStack.AddContainer(container);
                         cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();
                         AllContainers.Remove(container);
@@ -216,10 +216,10 @@ namespace ContainervervoerCasus.Models
                     }
                     // ValuableContainers
                     if (container.ContainerType == ContainerType.Valuable
-                        && lStack.IsStackableForValuable
-                        && (lStack.Row + 1) % 3 != 0)
+                        && mStack.IsStackableForValuable
+                        && mStack.IsStackInAValuableRow)
                     {
-                        Stack correctStack = cargoShip.FindStackWithId(lStack.StackID);
+                        Stack correctStack = cargoShip.FindStackWithId(mStack.StackID);
                         correctStack.AddContainer(container);
                         correctStack.IsStackableForValuable = false;
                         cargoShip.WeightMiddleSide = cargoShip.CalcWeightMiddleSide();

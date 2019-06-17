@@ -2,11 +2,10 @@
 {
     public class CooledContainer : Container
     {
-        public CooledContainer(int weight, ContainerType containerType)
+        public CooledContainer(int weight)
         {
             Weight = weight;
-            ContainerType = containerType;
-            MaximumCarryWeight = 120;
+            ContainerType = ContainerType.Cooled;
             IsCarying = 0;
 
             Dock.TotalWeightContainers += weight;

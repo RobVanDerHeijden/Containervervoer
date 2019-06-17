@@ -18,18 +18,7 @@ namespace ContainervervoerCasus.Models
         public bool HasCooling { get; set; }
         public bool IsStackableForNonValuable { get; set; }
         public bool IsStackableForValuable { get; set; }
-        // every stack has value based on how much % stackable it is based on maxstackable
-        // MaxStackableContainers  = 31 // [container.maxcarryweight[120]/container.minimumweight[4] + 1]
-        // MaxStackableWeight  = 150 // [container.maxcarryweight[120] + MaximumWeight[30]]
-
-        // e.g. StackableWeight = MaxStackableWeight - weightToSubstract;
-        // int weightToSubstract 0;
-        // if (containers.count() > 0)
-        // {
-        //  weightToSubstract = container.maxcarryweight[120] - 4*(containers.count()-1);
-        // }
-        // StackableContainers = MaxStackableContainers - containers.count();
-        // StackableValue = ((StackableContainers/MaxStackableContainers*100) + (StackableWeight/MaxStackableWeight*100)) / 2
+        public bool IsStackInAValuableRow { get; set; }
         public int StackWeight { get; set; }
         public static int MaxStackableContainers = Container.MaximumCarryWeight / Container.MinimumWeight; // 31
         public static int MaxStackableWeight = Container.MaximumCarryWeight + Container.MaximumWeight; // 150
@@ -37,8 +26,6 @@ namespace ContainervervoerCasus.Models
         public int StackableWeight { get; set; } 
         // MaxStackableContainers - containers.count();
         public int StackableContainers { get; set; } 
-        // ((StackableContainers/MaxStackableContainers*100) + (StackableWeight/MaxStackableWeight*100)) / 2
-        public int StackableValue { get; set; }
 
         // Constructors
         public Stack(int row, int column, BalansPosition balansPosition)
@@ -58,6 +45,10 @@ namespace ContainervervoerCasus.Models
 
             IsStackableForNonValuable = true;
             IsStackableForValuable = true;
+            if ((Row + 1) % 3 != 0)
+            {
+                IsStackInAValuableRow = true;
+            }
             StackableWeight = MaxStackableWeight;
             StackableContainers = MaxStackableContainers;
             StackWeight = 0;
@@ -94,7 +85,6 @@ namespace ContainervervoerCasus.Models
 
         public void CalcStackableWeight()
         {
-            int weightToSubstract = 0;
             if (Containers.Any())
             {
                 CalcStackWeight();
@@ -115,32 +105,35 @@ namespace ContainervervoerCasus.Models
             CalcStackableWeight();
             CheckIfStackIsStillStackableForNonValuable();
             CheckIfStackIsStillStackableForValuable();
-        }
-
-        private void CheckIfStackIsStillStackableForValuable()
-        {
-            if (StackableWeight > Container.MinimumWeight &&
-                StackableContainers > 0)
-            {
-                IsStackableForValuable = true;
-            }
-            else
+            if (container.ContainerType == ContainerType.Valuable)
             {
                 IsStackableForValuable = false;
             }
         }
 
+        public bool CanContainerBeAddedToStack()
+        {
+            IEnumerable<Container> valuables = Containers.Where(e => e.ContainerType == ContainerType.Valuable);
+            if (valuables.ToList().Any())
+            {
+                // Cant stack
+                return false;
+            }
+            return true;
+        }
+
+        private void CheckIfStackIsStillStackableForValuable()
+        {
+            // Assignement statement instead of if statement
+            IsStackableForValuable = StackableWeight > Container.MinimumWeight &&
+                                     StackableContainers > 0;
+        }
+
         private void CheckIfStackIsStillStackableForNonValuable()
         {
-            if (StackableWeight-Container.MaximumWeight > Container.MinimumWeight &&
-            StackableContainers > 0)
-            {
-                IsStackableForNonValuable = true;
-            }
-            else
-            {
-                IsStackableForNonValuable = false;
-            }
+            // Assignement statement instead of if statement
+            IsStackableForNonValuable = StackableWeight - Container.MaximumWeight > Container.MinimumWeight &&
+                                        StackableContainers > 0;
         }
 
         public override string ToString()

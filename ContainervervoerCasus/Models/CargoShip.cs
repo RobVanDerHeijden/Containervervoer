@@ -8,7 +8,6 @@ namespace ContainervervoerCasus.Models
     public class CargoShip
     {
         // Fields
-        public int CargoShipID { get; set; }
         public List<Stack> Stacks = new List<Stack>();
         public int WeightLeftSide { get; set; }
         public int WeightRightSide { get; set; }
@@ -27,11 +26,6 @@ namespace ContainervervoerCasus.Models
             {
                 for (int j = 0; j < width; j++) // for each column in the row
                 {
-                    // if j > width/2 left
-                    // CASE: Width = 3 ->
-                    // 0 < (2) / 2 = Left
-                    // 1 == (2) / 2 = Middle
-                    // 2 > (2) / 2 = Right
                     BalansPosition balansPosition = BalansPosition.None;
                     if (j < (width - 1) / 2)
                     {
@@ -59,8 +53,8 @@ namespace ContainervervoerCasus.Models
         {
             // LINQ
             Stack result = (from a in Stacks
-                          where a.StackID == stackId
-                select a).SingleOrDefault();
+                            where a.StackID == stackId
+                            select a).SingleOrDefault();
             return result;
         }
 

@@ -28,19 +28,19 @@ namespace ContainervervoerCasus
 
             if (status == ContainerType.Regular)
             {
-                Container newContainer = new Container(weight, status);
+                Container newContainer = new Container(weight);
                 _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Valuable)
             {
-                ValuableContainer newContainer = new ValuableContainer(weight, status);
+                ValuableContainer newContainer = new ValuableContainer(weight);
                 _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
             else if (status == ContainerType.Cooled)
             {
-                CooledContainer newContainer = new CooledContainer(weight, status);
+                CooledContainer newContainer = new CooledContainer(weight);
                 _dock.AllContainers.Add(newContainer);
                 Lbx_Containers.Items.Add(newContainer);
             }
@@ -176,7 +176,15 @@ namespace ContainervervoerCasus
                 Stack selectedStack = _cargoShip.FindStackWithId(stackId);
                 Container selectedContainer = Lbx_Containers.SelectedItem as Container;
 
-                selectedStack.AddContainer(selectedContainer);
+                if (selectedStack.CanContainerBeAddedToStack())
+                {
+                    selectedStack.AddContainer(selectedContainer);
+                }
+                else
+                {
+                    MessageBox.Show("Can't add the container to this stack");
+                }
+                
                 foreach (var conto in selectedStack.Containers)
                 {
                     Lbx_StackContainers.Items.Add(conto);
@@ -205,7 +213,7 @@ namespace ContainervervoerCasus
                 Lbx_Containers.Items.Add(newContainer);
             }
             UpdateContainerStats();
-            CalcProcentWeightFilled();
+            //CalcProcentWeightFilled();
         }
 
         private void Btn_SortContainers_Click(object sender, EventArgs e)
@@ -225,11 +233,10 @@ namespace ContainervervoerCasus
 
         private void Btn_Algorithm_Click(object sender, EventArgs e)
         {
-            double totalWeightContainers = _dock.AllContainers.Sum(item => item.Weight);
-            if (totalWeightContainers >= (_cargoShip.MaximumCarryWeight / 2))
+            if (Lbx_CargoShips.SelectedIndex != -1)
             {
-                //MessageBox.Show("Tot: " + totalWeightContainers + " Max: " + _cargoShip.MaximumCarryWeight / 2);
-                if (Lbx_CargoShips.SelectedIndex != -1)
+                double totalWeightContainers = _dock.AllContainers.Sum(item => item.Weight);
+                if (totalWeightContainers >= _cargoShip.MaximumCarryWeight / 2)
                 {
                     _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
                     _dock.ActivateAlgorithm(_cargoShip);
@@ -242,14 +249,15 @@ namespace ContainervervoerCasus
                 }
                 else
                 {
-                    MessageBox.Show("Select a CargoShip!");
+                    MessageBox.Show("Not Enough weight in Containers, or CargoShip to Big for the load!" + Environment.NewLine +
+                                    "Total weight Containers: " + totalWeightContainers + " Needed: " + _cargoShip.MaximumCarryWeight / 2);
                 }
             }
             else
             {
-                MessageBox.Show("Not Enough weight in Containers, or CargoShip to Big for the load!" + Environment.NewLine +
-                                "Total weight Containers: " + totalWeightContainers + " Needed: " + _cargoShip.MaximumCarryWeight / 2 );
+                MessageBox.Show("Select a CargoShip!");
             }
+            
 
         }
 
@@ -268,6 +276,10 @@ namespace ContainervervoerCasus
             decimal maxWeight = _cargoShip.MaximumCarryWeight;
             decimal procentWeightFilled = curWeight / maxWeight * 100;
             int percentFilled = (int) Math.Floor(procentWeightFilled);
+            if (percentFilled > 100)
+            {
+                percentFilled = 100;
+            }
             Pbr_WeightDistribution.Value = percentFilled;
         }
     }

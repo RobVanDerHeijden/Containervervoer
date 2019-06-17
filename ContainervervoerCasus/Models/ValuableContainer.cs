@@ -2,12 +2,11 @@
 {
     public class ValuableContainer : Container
     {
-        public ValuableContainer(int weight, ContainerType containerType)
+        public ValuableContainer(int weight)
         {
             Weight = weight;
-            MaximumCarryWeight = 0;
             IsCarying = 0;
-            ContainerType = containerType;
+            ContainerType = ContainerType.Valuable;
 
             Dock.TotalWeightContainers += weight;
             Dock.TotalContainers++;

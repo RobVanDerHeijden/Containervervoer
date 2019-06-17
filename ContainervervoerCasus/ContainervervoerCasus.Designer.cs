@@ -63,13 +63,13 @@
             this.Lbl_StackWeight = new System.Windows.Forms.Label();
             this.Lbl_StackBalansPosition = new System.Windows.Forms.Label();
             this.Grbx_CargoShipStats = new System.Windows.Forms.GroupBox();
+            this.Pbr_WeightDistribution = new System.Windows.Forms.ProgressBar();
             this.Lbl_CargoShipMaxWeight = new System.Windows.Forms.Label();
             this.Lbl_CargoShipCurrentWeight = new System.Windows.Forms.Label();
             this.Lbl_RightSideWeight = new System.Windows.Forms.Label();
             this.Lbl_LeftSideWeight = new System.Windows.Forms.Label();
             this.Lbl_MiddleSideWeight = new System.Windows.Forms.Label();
             this.Lbl_StackContainers = new System.Windows.Forms.Label();
-            this.Pbr_WeightDistribution = new System.Windows.Forms.ProgressBar();
             this.Grbx_ContainerStats.SuspendLayout();
             this.Grbx_AddContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Nud_RandomContainers)).BeginInit();
@@ -407,7 +407,7 @@
             // 
             this.Btn_AddContainerToStack.Location = new System.Drawing.Point(645, 29);
             this.Btn_AddContainerToStack.Name = "Btn_AddContainerToStack";
-            this.Btn_AddContainerToStack.Size = new System.Drawing.Size(129, 116);
+            this.Btn_AddContainerToStack.Size = new System.Drawing.Size(129, 63);
             this.Btn_AddContainerToStack.TabIndex = 13;
             this.Btn_AddContainerToStack.Text = "Add Selected Container To Stack";
             this.Btn_AddContainerToStack.UseVisualStyleBackColor = true;
@@ -415,9 +415,9 @@
             // 
             // Btn_SortContainers
             // 
-            this.Btn_SortContainers.Location = new System.Drawing.Point(645, 151);
+            this.Btn_SortContainers.Location = new System.Drawing.Point(645, 98);
             this.Btn_SortContainers.Name = "Btn_SortContainers";
-            this.Btn_SortContainers.Size = new System.Drawing.Size(129, 116);
+            this.Btn_SortContainers.Size = new System.Drawing.Size(129, 136);
             this.Btn_SortContainers.TabIndex = 40;
             this.Btn_SortContainers.Text = "1. SortContainers";
             this.Btn_SortContainers.UseVisualStyleBackColor = true;
@@ -425,9 +425,9 @@
             // 
             // Btn_Algorithm
             // 
-            this.Btn_Algorithm.Location = new System.Drawing.Point(645, 273);
+            this.Btn_Algorithm.Location = new System.Drawing.Point(645, 235);
             this.Btn_Algorithm.Name = "Btn_Algorithm";
-            this.Btn_Algorithm.Size = new System.Drawing.Size(129, 116);
+            this.Btn_Algorithm.Size = new System.Drawing.Size(129, 158);
             this.Btn_Algorithm.TabIndex = 41;
             this.Btn_Algorithm.Text = "2. Algorithm";
             this.Btn_Algorithm.UseVisualStyleBackColor = true;
@@ -476,6 +476,13 @@
             this.Grbx_CargoShipStats.TabIndex = 28;
             this.Grbx_CargoShipStats.TabStop = false;
             this.Grbx_CargoShipStats.Text = "CargoShip Stats";
+            // 
+            // Pbr_WeightDistribution
+            // 
+            this.Pbr_WeightDistribution.Location = new System.Drawing.Point(6, 89);
+            this.Pbr_WeightDistribution.Name = "Pbr_WeightDistribution";
+            this.Pbr_WeightDistribution.Size = new System.Drawing.Size(354, 26);
+            this.Pbr_WeightDistribution.TabIndex = 17;
             // 
             // Lbl_CargoShipMaxWeight
             // 
@@ -530,13 +537,6 @@
             this.Lbl_StackContainers.Size = new System.Drawing.Size(226, 17);
             this.Lbl_StackContainers.TabIndex = 16;
             this.Lbl_StackContainers.Text = "Stack Containers: (Bottom to Top):";
-            // 
-            // Pbr_WeightDistribution
-            // 
-            this.Pbr_WeightDistribution.Location = new System.Drawing.Point(6, 89);
-            this.Pbr_WeightDistribution.Name = "Pbr_WeightDistribution";
-            this.Pbr_WeightDistribution.Size = new System.Drawing.Size(354, 26);
-            this.Pbr_WeightDistribution.TabIndex = 17;
             // 
             // ContainervervoerCasus
             // 
