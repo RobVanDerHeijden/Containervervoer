@@ -15,10 +15,8 @@ namespace ContainervervoerCasus.Models
         public int WeightMiddleSide { get; set; }
         public int CurrentWeight { get; set; }
         public int MaximumCarryWeight { get; set; }
-        //public int IsCarying { get; set; }
         public int Width { get; set; } //columns
         public int Length { get; set; } //rows
-        // maxgekoeld??
 
         // Constructors
         public CargoShip(int width, int length)
@@ -35,7 +33,7 @@ namespace ContainervervoerCasus.Models
                     // 1 == (2) / 2 = Middle
                     // 2 > (2) / 2 = Right
                     BalansPosition balansPosition = BalansPosition.None;
-                    if (j < (width-1) / 2)
+                    if (j < (width - 1) / 2)
                     {
                         balansPosition = BalansPosition.Left;
                     } else if (j == (width - 1) / 2)
@@ -50,7 +48,7 @@ namespace ContainervervoerCasus.Models
 
                 }
             }
-            MaximumCarryWeight = width * length * 150; 
+            MaximumCarryWeight = width * length * (Container.MaximumWeight + Container.MaximumCarryWeight); 
         }
         public void AddStack(Stack stack)
         {
@@ -59,26 +57,11 @@ namespace ContainervervoerCasus.Models
 
         public Stack FindStackWithId(int stackId)
         {
+            // LINQ
             Stack result = (from a in Stacks
                           where a.StackID == stackId
                 select a).SingleOrDefault();
             return result;
-        }
-
-        public void AddWeightLeftSide(int weight)
-        {
-            WeightLeftSide += weight;
-            CurrentWeight += weight;
-        }
-        public void AddWeightMiddleSide(int weight)
-        {
-            WeightMiddleSide += weight;
-            CurrentWeight += weight;
-        }
-        public void AddWeightRightSide(int weight)
-        {
-            WeightRightSide += weight;
-            CurrentWeight += weight;
         }
 
         public override string ToString()
@@ -104,6 +87,22 @@ namespace ContainervervoerCasus.Models
                 WeightRightSide += stack.StackWeight;
             }
             return WeightRightSide;
+        }
+
+        public int CalcCurrentWeight()
+        {
+            CurrentWeight = WeightLeftSide + WeightRightSide + WeightMiddleSide;
+            return CurrentWeight;
+        }
+
+        public int CalcWeightMiddleSide()
+        {
+            WeightMiddleSide = 0;
+            foreach (Stack stack in Stacks.Where(n => n.BalansPosition == BalansPosition.Middle))
+            {
+                WeightMiddleSide += stack.StackWeight;
+            }
+            return WeightMiddleSide;
         }
     }
 }

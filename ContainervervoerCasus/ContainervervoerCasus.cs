@@ -97,6 +97,11 @@ namespace ContainervervoerCasus
 
         private void Lbx_CargoShips_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RefreshListsCargoShip();
+        }
+
+        private void RefreshListsCargoShip()
+        {
             Lbx_StackContainers.Items.Clear();
             if (Lbx_CargoShips.SelectedIndex != -1)
             {
@@ -117,7 +122,7 @@ namespace ContainervervoerCasus
                 for (int currentRow = 0; currentRow < _cargoShip.Length; currentRow++)
                 {
                     DataRow dr = dt.NewRow();
-                    
+
                     for (int currentColumn = 0; currentColumn < _cargoShip.Width; currentColumn++)
                     {
                         int amountContainers = 0;
@@ -127,7 +132,7 @@ namespace ContainervervoerCasus
                         }
                         int stackId = _cargoShip.Stacks[counter].StackID;
 
-                        Stack stock =_cargoShip.FindStackWithId(stackId);
+                        Stack stock = _cargoShip.FindStackWithId(stackId);
                         stock.CalcStackWeight();
                         Lbl_StackWeight.Text = "Stack Weight: " + stock.StackWeight;
                         dr[currentColumn] = stackId + "; Cont:" + amountContainers + " Cool:" + stock.HasCooling;
@@ -187,6 +192,11 @@ namespace ContainervervoerCasus
         private void Btn_SortContainers_Click(object sender, EventArgs e)
         {
             _dock.SplitListContainers();
+            RefreshAllContainers();
+        }
+
+        private void RefreshAllContainers()
+        {
             Lbx_Containers.Items.Clear();
             foreach (var conto in _dock.AllContainers)
             {
@@ -196,13 +206,23 @@ namespace ContainervervoerCasus
 
         private void Btn_Algorithm_Click(object sender, EventArgs e)
         {
-            _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
-            _dock.ActivateAlgorithm(_cargoShip);
-            Lbl_LeftSideWeight.Text = "Left Weight: " + _cargoShip.WeightLeftSide;
-            Lbl_MiddleSideWeight.Text = "Middle Weight: " + _cargoShip.WeightMiddleSide;
-            Lbl_RightSideWeight.Text = "Right Weight: " + _cargoShip.WeightRightSide;
-            Lbl_CargoShipCurrentWeight.Text = "Current Weight: " + _cargoShip.CurrentWeight;
-            Lbl_CargoShipMaxWeight.Text = "Max Weight: " + _cargoShip.MaximumCarryWeight;
+            if (Lbx_CargoShips.SelectedIndex != -1)
+            {
+                _cargoShip = Lbx_CargoShips.SelectedItem as CargoShip;
+                _dock.ActivateAlgorithm(_cargoShip);
+                Lbl_LeftSideWeight.Text = "Left Weight: " + _cargoShip.WeightLeftSide;
+                Lbl_MiddleSideWeight.Text = "Middle Weight: " + _cargoShip.WeightMiddleSide;
+                Lbl_RightSideWeight.Text = "Right Weight: " + _cargoShip.WeightRightSide;
+                Lbl_CargoShipCurrentWeight.Text = "Current Weight: " + _cargoShip.CurrentWeight;
+                Lbl_CargoShipMaxWeight.Text = "Max Weight: " + _cargoShip.MaximumCarryWeight;
+            }
+            else
+            {
+                MessageBox.Show("Select a CargoShip!");
+            }
+
+            RefreshListsCargoShip();
+            RefreshAllContainers();
         }
     }
 }

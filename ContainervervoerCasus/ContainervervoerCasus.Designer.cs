@@ -176,7 +176,7 @@
             this.Nud_RandomContainers.Size = new System.Drawing.Size(57, 22);
             this.Nud_RandomContainers.TabIndex = 11;
             this.Nud_RandomContainers.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});

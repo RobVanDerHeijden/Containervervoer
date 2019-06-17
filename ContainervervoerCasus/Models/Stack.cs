@@ -16,7 +16,8 @@ namespace ContainervervoerCasus.Models
         public int Row { get; set; }
         public int Column { get; set; }
         public bool HasCooling { get; set; }
-        public bool IsStackable { get; set; }
+        public bool IsStackableForNonValuable { get; set; }
+        public bool IsStackableForValuable { get; set; }
         // every stack has value based on how much % stackable it is based on maxstackable
         // MaxStackableContainers  = 31 // [container.maxcarryweight[120]/container.minimumweight[4] + 1]
         // MaxStackableWeight  = 150 // [container.maxcarryweight[120] + MaximumWeight[30]]
@@ -37,7 +38,7 @@ namespace ContainervervoerCasus.Models
         // MaxStackableContainers - containers.count();
         public int StackableContainers { get; set; } 
         // ((StackableContainers/MaxStackableContainers*100) + (StackableWeight/MaxStackableWeight*100)) / 2
-        public int StackableValue { get; set; } 
+        public int StackableValue { get; set; }
 
         // Constructors
         public Stack(int row, int column, BalansPosition balansPosition)
@@ -55,7 +56,8 @@ namespace ContainervervoerCasus.Models
                 HasCooling = false;
             }
 
-            IsStackable = true;
+            IsStackableForNonValuable = true;
+            IsStackableForValuable = true;
             StackableWeight = MaxStackableWeight;
             StackableContainers = MaxStackableContainers;
             StackWeight = 0;
@@ -69,6 +71,19 @@ namespace ContainervervoerCasus.Models
             foreach (Container container in Containers)
             {
                 StackWeight += container.Weight;
+            }
+        }
+
+        // For Unit Testing
+        public bool HasValuableContainer
+        {
+            get
+            {
+                if (Containers.Count > 0 && Containers[Containers.Count - 1].ContainerType == ContainerType.Valuable)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -99,24 +114,36 @@ namespace ContainervervoerCasus.Models
             CalcStackWeight();
             CalcStackableContainers();
             CalcStackableWeight();
-            CheckIfStackIsStillStackable();
+            CheckIfStackIsStillStackableForNonValuable();
+            CheckIfStackIsStillStackableForValuable();
         }
 
-        private void CheckIfStackIsStillStackable()
+        private void CheckIfStackIsStillStackableForValuable()
         {
-            // TODO check if valuable is in stack
-            //var knownErrors = Enum.GetValues(typeof(ContainerType));
-            //return Containers.Intersect(knownErrors).Any();
-
-
             if (StackableWeight > Container.MinimumWeight &&
-            StackableContainers > 0)
+                StackableContainers > 0)
             {
-                IsStackable = true;
+                IsStackableForValuable = true;
             }
             else
             {
-                IsStackable = false;
+                IsStackableForValuable = false;
+            }
+        }
+
+        private void CheckIfStackIsStillStackableForNonValuable()
+        {
+            // TODO: check if valuable is in stack
+            //var knownErrors = Enum.GetValues(typeof(ContainerType));
+            //return Containers.Intersect(knownErrors).Any();
+            if (StackableWeight-Container.MaximumWeight > Container.MinimumWeight &&
+            StackableContainers > 0)
+            {
+                IsStackableForNonValuable = true;
+            }
+            else
+            {
+                IsStackableForNonValuable = false;
             }
         }
 
