@@ -90,8 +90,8 @@ namespace ContainervervoerCasus.Models
             AllContainers.AddRange(regulars);
             AllContainers.AddRange(valuables);
         }
-
-
+        
+        /* ALGORITHM */
         public void ActivateAlgorithm(CargoShip cargoShip)
         {
             IEnumerable<Stack> leftSideStacks = cargoShip.Stacks.Where(e => e.BalansPosition == BalansPosition.Left);

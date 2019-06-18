@@ -42,12 +42,7 @@ namespace ContainervervoerCasus.Models.ContainerTests
                 new CooledContainer(18)
             };
             _dock.AllContainers = _containers1;
-            //List<Stack> stacks = new List<Stack>()
-            //{
-            //    new Stack(0, 0, BalansPosition.Left),
-            //    new Stack(0, 1, BalansPosition.Middle),
-            //    new Stack(0, 2, BalansPosition.Right)
-            //};
+            
         }
 
         /* Style Syntax For TestMethods
@@ -173,9 +168,48 @@ namespace ContainervervoerCasus.Models.ContainerTests
             Assert.IsTrue(cargoHasEnoughWeight);
         }
         // Het schip moet in evenwicht zijn: het volledige gewicht van de containers voor iedere helft mag niet meer dan 20% verschillen.
-        /* TODO: make this testmethod */
+        [TestMethod]
+        public void IsCargoShipWeightDistributionBalanced()
+        {
+            // Arange
+            CargoShip cargoShip = new CargoShip(3, 1);
+            int leftWeight = 100;//cargoShip.WeightLeftSide;
+            int rightWeight = 110;//cargoShip.WeightRightSide;
+            bool isBallenced;
+            // Act
+            int difference = cargoShip.ProcentDifferenceSides(leftWeight, rightWeight);
+            if (difference > 20 || difference < -20)
+            {
+                isBallenced = false;
+            }
+            else
+            {
+                isBallenced = true;
+            }
+            // Assert
+            Assert.IsTrue(isBallenced);
+        }
         // De afmeting van een schip moet instelbaar zijn in de applicatie, waarbij de hoogte en breedte in containers aangegeven kan worden.
-        /* TODO: make this testmethod */
+        [TestMethod]
+        public void CountStacksEqualCargoShipMeasures()
+        {
+            // Arange
+            CargoShip cargoShip = new CargoShip(3, 1);
+            List<Stack> stacks = new List<Stack>()
+            {
+                new Stack(0, 0, BalansPosition.Left),
+                new Stack(0, 1, BalansPosition.Middle),
+                new Stack(0, 2, BalansPosition.Right)
+            };
+            cargoShip.Stacks = stacks;
+            int cargoShipStacks = cargoShip.Width * cargoShip.Length;//cargoShip.WeightLeftSide;
+            int innerStacks = cargoShip.Stacks.Count;//cargoShip.WeightRightSide;
+            // Act
+            bool amountStacksMatch = cargoShipStacks == innerStacks;
+            // Assert
+            Assert.IsTrue(amountStacksMatch);
+        }
+
 
     }
 }

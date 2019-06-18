@@ -98,5 +98,18 @@ namespace ContainervervoerCasus.Models
             }
             return WeightMiddleSide;
         }
+
+        public int ProcentDifferenceSides(int leftWeight, int rightWeight)
+        {
+            //   |V1−V2|
+            // ------------
+            // [(V1 + V2)2]
+            decimal topHalve = leftWeight - rightWeight;
+            decimal bottomHalve = (leftWeight + rightWeight) / 2;
+
+            decimal difference = topHalve / bottomHalve * 100;
+            int intDifference = Decimal.ToInt32(difference);
+            return intDifference;
+        }
     }
 }
